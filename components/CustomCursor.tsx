@@ -57,25 +57,22 @@ export default function CustomCursor() {
         isHovered.current = hovered;
         if (ring && dot) {
           if (hovered) {
-            ring.style.transform = "scale(1.7)";
-            ring.style.backgroundColor = "rgba(204, 255, 0, 0.15)";
+            ring.style.transform = "scale(1.5)";
+            ring.style.backgroundColor = "rgba(204, 255, 0, 0.1)";
             ring.style.borderColor = "#CCFF00";
-            ring.style.boxShadow = "0 0 20px rgba(204, 255, 0, 0.45)";
             dot.style.transform = "scale(0.5)";
           } else {
             ring.style.transform = "scale(1)";
-            ring.style.backgroundColor = "rgba(204, 255, 0, 0.04)";
-            ring.style.borderColor = "rgba(204, 255, 0, 0.85)";
-            ring.style.boxShadow = "0 0 10px rgba(204, 255, 0, 0.25)";
+            ring.style.backgroundColor = "transparent";
+            ring.style.borderColor = "rgba(204, 255, 0, 0.6)";
             dot.style.transform = "scale(1)";
           }
         }
       }
     };
 
-    // Fast 144Hz interpolation loop for buttery-smooth tracking
+    // Smooth tracking
     const updateCursor = () => {
-      // 0.35 lerp speed gives immediate responsiveness while staying silky smooth
       cursor.current.x += (mouse.current.x - cursor.current.x) * 0.35;
       cursor.current.y += (mouse.current.y - cursor.current.y) * 0.35;
 
@@ -105,27 +102,26 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="pointer-events-none fixed top-0 left-0 z-[999999] opacity-0 select-none"
+      className="pointer-events-none fixed top-0 left-0 z-[999999] opacity-0 select-none hidden md:block"
       style={{
         willChange: "transform",
         transform: "translate3d(-100px, -100px, 0)",
       }}
     >
-      {/* Outer Halo Ring (Centered at 0,0) */}
+      {/* Outer Halo Ring */}
       <div
         ref={ringRef}
-        className="absolute -top-4 -left-4 w-8 h-8 rounded-full border border-[#CCFF00]/85 bg-[#CCFF00]/[0.04] pointer-events-none"
+        className="absolute -top-3.5 -left-3.5 w-7 h-7 rounded-full border border-[#CCFF00]/60 pointer-events-none"
         style={{
-          boxShadow: "0 0 10px rgba(204, 255, 0, 0.25)",
-          transition: "transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease",
+          transition: "transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease",
           willChange: "transform",
         }}
       />
 
-      {/* Center Dot (Centered at 0,0) */}
+      {/* Center Dot */}
       <div
         ref={dotRef}
-        className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-[#CCFF00] pointer-events-none shadow-[0_0_8px_#CCFF00]"
+        className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-[#CCFF00] pointer-events-none"
         style={{
           transition: "transform 0.15s ease",
           willChange: "transform",

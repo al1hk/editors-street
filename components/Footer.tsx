@@ -48,38 +48,47 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[#050706] text-white overflow-hidden border-t border-white/[0.08] select-none">
-      {/* Background Subtle Cyber Grid */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.025]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#CCFF00 1px, transparent 1px), linear-gradient(90deg, #CCFF00 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
+    <footer className="relative bg-black text-white overflow-hidden border-t border-white/[0.08] select-none">
+      {/* JOIN OUR COMMUNITY Banner — Matches Reference Image */}
+      <div className="border-b border-white/[0.08] py-16 sm:py-20 text-center px-6">
+        <div className="max-w-3xl mx-auto space-y-4">
+          <h3 className="font-heading text-3xl sm:text-4xl md:text-5xl text-[#CCFF00] uppercase tracking-tight">
+            JOIN OUR COMMUNITY
+          </h3>
+          <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed">
+            Subscribe to get production updates, retention breakdowns, and creative editing insights.
+          </p>
+          <div className="pt-3 max-w-md mx-auto flex items-center gap-2">
+            <input
+              type="email"
+              placeholder="ENTER YOUR EMAIL..."
+              className="flex-1 bg-zinc-950 border border-white/10 px-4 py-2.5 rounded-sm text-xs font-body text-white placeholder:text-zinc-600 outline-none focus:border-[#CCFF00]"
+            />
+            <button
+              onClick={() => alert("Thank you for subscribing!")}
+              className="px-5 py-2.5 rounded-sm bg-[#CCFF00] hover:bg-[#E5FE00] text-black font-body font-bold text-xs uppercase tracking-wider transition-all"
+            >
+              JOIN
+            </button>
+          </div>
+        </div>
+      </div>
 
-      {/* Ambient Radial Lime Glow */}
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-[#CCFF00]/[0.035] rounded-full blur-[140px] pointer-events-none" />
-
-      {/* Top Accent Gradient Border */}
-      <div className="w-full h-[1.5px] bg-gradient-to-r from-transparent via-[#CCFF00]/40 to-transparent" />
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 pt-16 sm:pt-20 pb-12 space-y-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 pt-16 sm:pt-20 pb-12 space-y-14">
         
         {/* Top & Middle Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16 items-start">
           
           {/* Brand Column (6 Cols) */}
-          <div className="md:col-span-6 space-y-5">
+          <div className="md:col-span-6 space-y-4">
             <div className="flex items-center gap-3">
-              <span className="w-3 h-3 rounded-full bg-[#CCFF00] shadow-[0_0_12px_#CCFF00]" />
-              <span className="font-heading text-2xl sm:text-3xl tracking-tight text-white uppercase">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#CCFF00]" />
+              <span className="font-heading text-2xl sm:text-3xl tracking-wide text-white uppercase">
                 Editors Street
               </span>
             </div>
 
-            <p className="font-body text-sm text-zinc-400 max-w-md leading-relaxed">
+            <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-md leading-relaxed">
               Social Media &amp; Content Agency
             </p>
 
@@ -90,7 +99,7 @@ export default function Footer() {
 
           {/* Navigation Links Column (3 Cols) */}
           <div className="md:col-span-3 space-y-4">
-            <h4 className="font-ui text-xs font-bold text-[#CCFF00] tracking-[0.25em] uppercase">
+            <h4 className="font-body text-xs font-bold text-[#CCFF00] tracking-[0.2em] uppercase">
               Navigation
             </h4>
 
@@ -99,9 +108,9 @@ export default function Footer() {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="font-ui text-xs sm:text-[13px] text-zinc-400 hover:text-[#CCFF00] tracking-wide uppercase transition-colors inline-flex items-center gap-1.5 group"
+                    className="font-body text-xs text-zinc-400 hover:text-[#CCFF00] tracking-wider uppercase transition-colors inline-flex items-center gap-2 group"
                   >
-                    <span className="w-1 h-1 rounded-full bg-zinc-600 group-hover:bg-[#CCFF00] transition-colors" />
+                    <span className="w-1 h-1 rounded-full bg-zinc-700 group-hover:bg-[#CCFF00] transition-colors" />
                     {link.name}
                   </a>
                 </li>
@@ -112,7 +121,7 @@ export default function Footer() {
           {/* Socials & Back to Top (3 Cols) */}
           <div className="md:col-span-3 space-y-6">
             <div className="space-y-4">
-              <h4 className="font-ui text-xs font-bold text-[#CCFF00] tracking-[0.25em] uppercase">
+              <h4 className="font-body text-xs font-bold text-[#CCFF00] tracking-[0.2em] uppercase">
                 Connect
               </h4>
 
@@ -125,13 +134,13 @@ export default function Footer() {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-ui text-xs text-zinc-300 hover:text-[#CCFF00] tracking-wider uppercase inline-flex items-center gap-1.5 transition-colors group"
+                        className="font-body text-xs text-zinc-400 hover:text-[#CCFF00] tracking-wider uppercase inline-flex items-center gap-1.5 transition-colors group"
                       >
-                        <Icon className="w-3.5 h-3.5 text-zinc-400 group-hover:text-[#CCFF00] transition-colors" />
+                        <Icon className="w-3.5 h-3.5 text-zinc-500 group-hover:text-[#CCFF00] transition-colors" />
                         {social.name}
                       </a>
                       {idx < SOCIAL_LINKS.length - 1 && (
-                        <span className="text-zinc-600 select-none">·</span>
+                        <span className="text-zinc-700 select-none">·</span>
                       )}
                     </React.Fragment>
                   );
@@ -139,11 +148,11 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Back to Top Cyber Button */}
+            {/* Back to Top Button */}
             <div className="pt-2">
               <button
                 onClick={scrollToTop}
-                className="group px-4 py-2.5 rounded-full border border-white/10 hover:border-[#CCFF00] bg-white/[0.02] hover:bg-[#CCFF00]/10 transition-all duration-300 inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-white"
+                className="group px-4 py-2.5 rounded-full border border-white/10 hover:border-[#CCFF00] bg-[#0a0a0a] hover:bg-[#CCFF00]/10 transition-all duration-200 inline-flex items-center gap-2 text-xs font-body text-zinc-400 hover:text-white"
               >
                 <span>BACK TO TOP</span>
                 <ArrowUp className="w-3.5 h-3.5 text-[#CCFF00] group-hover:-translate-y-0.5 transition-transform" />
@@ -166,8 +175,8 @@ export default function Footer() {
             <p>© 2026 Editors Street. All rights reserved.</p>
 
             <div className="flex items-center gap-2 text-zinc-500">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] animate-pulse" />
-              <span>POST-PRODUCTION AGENCY // 2026</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]" />
+              <span>CONTENT &amp; POST-PRODUCTION // 2026</span>
             </div>
           </div>
         </div>

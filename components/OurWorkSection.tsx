@@ -1,148 +1,275 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play } from "lucide-react";
+import { Play, Film, Smartphone, ArrowRight, Eye } from "lucide-react";
 import { motion } from "framer-motion";
 
-interface VideoShowcase {
+interface ReelItem {
   id: string;
+  title: string;
   views: string;
   image: string;
+  metrics: string;
 }
 
-const VIDEOS_9_16: VideoShowcase[] = [
+interface LongFormItem {
+  id: string;
+  title: string;
+  views: string;
+  image: string;
+  metrics: string;
+}
+
+const REELS_DATA: ReelItem[] = [
   {
-    id: "video-1",
-    views: "1.2M Views",
+    id: "reel-1",
+    title: "VIRAL TALKING HEAD & RETENTION CUT",
+    views: "1.8M Views",
     image: "/assets/hero/clip1.jpg",
+    metrics: "High-paced captions, motion graphics, and audio mix.",
   },
   {
-    id: "video-2",
-    views: "640K Views",
+    id: "reel-2",
+    title: "HIGH-ENERGY PRODUCT VFX & SOUND DESIGN",
+    views: "940K Views",
     image: "/assets/hero/clip2.jpg",
+    metrics: "Multi-layer sound FX, speed ramping, and color suite.",
+  },
+];
+
+const LONG_FORM_DATA: LongFormItem[] = [
+  {
+    id: "long-1",
+    title: "DOCUMENTARY MASTERCLASS",
+    views: "1.4M Views",
+    image: "/assets/hero/clip3.jpg",
+    metrics: "Cinematic grade, archive research & narrative editing.",
   },
   {
-    id: "video-3",
-    views: "350K Views",
-    image: "/assets/hero/clip3.jpg",
+    id: "long-2",
+    title: "SILICON VALLEY TECH FOUNDER",
+    views: "680K Views",
+    image: "/assets/hero/clip4.jpg",
+    metrics: "Multicam timeline cut, dynamic lower thirds & audio master.",
+  },
+  {
+    id: "long-3",
+    title: "STUDIO PODCAST & VISUAL CUT",
+    views: "920K Views",
+    image: "/assets/hero/clip1.jpg",
+    metrics: "Multi-track sync, Dolby audio mix & dynamic video highlights.",
   },
 ];
 
 export default function OurWorkSection() {
-  const [hoveredVideo, setHoveredVideo] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"all" | "reels" | "longform">("all");
+
+  const showReels = activeTab === "all" || activeTab === "reels";
+  const showLongForm = activeTab === "all" || activeTab === "longform";
 
   return (
     <section
       id="our-work"
-      className="relative py-28 sm:py-40 bg-transparent overflow-hidden select-none"
+      className="relative py-24 sm:py-32 bg-black overflow-hidden select-none border-t border-white/[0.08]"
     >
-      {/* 
-        =========================================================
-        LIME GREEN COLOR SHADING ON OUR WORK SECTION
-        =========================================================
-      */}
-      <div className="absolute top-1/4 -left-20 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] bg-[#CCFF00]/[0.08] rounded-full blur-[190px] pointer-events-none" />
-      <div className="absolute bottom-10 -right-20 w-[550px] sm:w-[800px] h-[550px] sm:h-[800px] bg-[#CCFF00]/[0.07] rounded-full blur-[180px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/3 w-[700px] h-[400px] bg-[#142614]/40 rounded-full blur-[180px] pointer-events-none" />
-
-      {/* Subtle Cyber Grid Texture */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.035]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#CCFF00 1px, transparent 1px), linear-gradient(90deg, #CCFF00 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 space-y-16 sm:space-y-20">
-        
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 space-y-14 sm:space-y-18">
         {/* Section Header */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="w-10 h-[2px] bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]" />
-            <span className="font-ui text-[10px] font-bold tracking-[0.4em] text-[#CCFF00] uppercase">
-              PORTFOLIO SHOWCASE
-            </span>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div className="space-y-3">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-[2px] bg-[#CCFF00]" />
+              <span className="font-body text-[10px] font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
+                PORTFOLIO SHOWCASE
+              </span>
+            </div>
+
+            <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-tight leading-none text-white">
+              OUR <span className="text-[#CCFF00]">WORK</span>
+            </h2>
+
+            <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-md leading-relaxed">
+              Engineered for maximum viewer retention, viral growth, and cinematic polish.
+            </p>
           </div>
 
-          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-tight">
-            <span
-              className="cyber-glitch-loop text-white"
-              data-text="Our Work"
+          {/* Filter Tabs */}
+          <div className="flex items-center gap-2 p-1 rounded-md bg-zinc-950 border border-white/10 shrink-0 self-start md:self-auto">
+            <button
+              onClick={() => setActiveTab("all")}
+              className={`px-4 py-2 rounded-sm text-[10px] sm:text-[11px] font-body font-bold uppercase tracking-wider transition-all duration-200 ${
+                activeTab === "all"
+                  ? "bg-[#CCFF00] text-black shadow-md shadow-[#CCFF00]/20"
+                  : "text-zinc-400 hover:text-white"
+              }`}
             >
-              Our <span className="text-[#CCFF00] drop-shadow-[0_0_40px_rgba(204,255,0,0.4)]">Work</span>
-            </span>
-          </h2>
-
-          <p className="font-body text-sm sm:text-base text-zinc-300 max-w-xl leading-[1.8]">
-            A selection of content we&apos;ve created for our clients.
-          </p>
+              ALL WORK
+            </button>
+            <button
+              onClick={() => setActiveTab("reels")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-sm text-[10px] sm:text-[11px] font-body font-bold uppercase tracking-wider transition-all duration-200 ${
+                activeTab === "reels"
+                  ? "bg-[#CCFF00] text-black shadow-md shadow-[#CCFF00]/20"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              <Smartphone className="w-3 h-3" />
+              REELS
+            </button>
+            <button
+              onClick={() => setActiveTab("longform")}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-sm text-[10px] sm:text-[11px] font-body font-bold uppercase tracking-wider transition-all duration-200 ${
+                activeTab === "longform"
+                  ? "bg-[#CCFF00] text-black shadow-md shadow-[#CCFF00]/20"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              <Film className="w-3 h-3" />
+              LONG FORM
+            </button>
+          </div>
         </div>
 
-        {/* 
-          3x1 9:16 VERTICAL CINEMATIC VIDEO GRID (CLEAN VISUALS & VIEW METRIC BADGES)
-        */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 lg:gap-10 items-stretch">
-          {VIDEOS_9_16.map((item, idx) => {
-            const isHovered = hoveredVideo === item.id;
+        {/* ============================
+            REELS — VERTICAL
+           ============================ */}
+        {showReels && (
+          <div className="space-y-6">
+            <div className="flex items-center gap-2 border-b border-white/[0.08] pb-3">
+              <Smartphone className="w-4 h-4 text-[#CCFF00]" />
+              <h3 className="font-heading text-sm sm:text-base text-white uppercase tracking-wider">
+                REELS &amp; SHORTS
+              </h3>
+            </div>
 
-            return (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 35 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.6, delay: idx * 0.12, ease: "easeOut" }}
-                onMouseEnter={() => setHoveredVideo(item.id)}
-                onMouseLeave={() => setHoveredVideo(null)}
-                className="group relative flex flex-col justify-between cursor-pointer"
-              >
-                {/* 9:16 Vertical Video Frame */}
-                <div className="relative aspect-[9/16] w-full rounded-[32px] overflow-hidden border-2 border-white/15 hover:border-[#CCFF00] shadow-[0_20px_50px_rgba(0,0,0,0.95)] transition-all duration-500 bg-zinc-950">
-                  
-                  {/* High-Res Video Still with Scale Hover */}
-                  <img
-                    src={item.image}
-                    alt={item.views}
-                    className="w-full h-full object-cover transition-transform duration-700 brightness-90 group-hover:scale-105 group-hover:brightness-100"
-                  />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-12 max-w-3xl mx-auto">
+              {REELS_DATA.map((item, idx) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: idx * 0.1 }}
+                  className="group relative flex flex-col space-y-4 cursor-pointer"
+                >
+                  {/* Video Thumbnail Container */}
+                  <div className="relative aspect-[9/16] w-full rounded-xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-xl">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.03]"
+                    />
 
-                  {/* Scanline Texture Overlay */}
-                  <div className="absolute inset-0 scanline-overlay opacity-30 pointer-events-none" />
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
 
-                  {/* Gradient Depth Overlays */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/50 pointer-events-none" />
-
-                  {/* Top Glowing Neon Laser Edge on Hover */}
-                  <div
-                    className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#CCFF00] to-transparent shadow-[0_0_20px_#CCFF00] transition-opacity duration-300 ${
-                      isHovered ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
-
-                  {/* Center Animated Play Beacon */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                    <div className="w-16 h-16 rounded-full bg-black/75 backdrop-blur-md border-2 border-[#CCFF00] flex items-center justify-center text-[#CCFF00] shadow-[0_0_30px_rgba(204,255,0,0.6)] transition-all duration-300 group-hover:scale-115 group-hover:bg-[#CCFF00] group-hover:text-black">
-                      <Play className="w-6 h-6 fill-current translate-x-0.5" />
+                    {/* Center Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                      <div className="w-14 h-14 rounded-full bg-black/80 border border-[#CCFF00]/40 flex items-center justify-center text-[#CCFF00] group-hover:bg-[#CCFF00] group-hover:text-black group-hover:scale-110 transition-all duration-300">
+                        <Play className="w-5 h-5 fill-current translate-x-0.5" />
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Bottom View Metric Badge Only */}
-                  <div className="absolute bottom-6 left-6 right-6 z-10 flex justify-center">
-                    <div className="px-5 py-2 rounded-full bg-black/85 backdrop-blur-xl border border-[#CCFF00]/50 group-hover:bg-[#CCFF00] group-hover:border-[#CCFF00] shadow-[0_0_20px_rgba(0,0,0,0.8)] transition-all duration-300">
-                      <span className="text-sm sm:text-base font-mono font-black tracking-wider text-[#CCFF00] group-hover:text-black transition-colors duration-300">
+                    {/* View Count */}
+                    <div className="absolute bottom-3.5 left-3.5 z-10">
+                      <span className="px-2.5 py-0.5 rounded-sm bg-[#CCFF00] text-[10px] font-body font-bold text-black uppercase">
                         {item.views}
                       </span>
                     </div>
                   </div>
 
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                  {/* Below Thumbnail: Title, Description & Action Button */}
+                  <div className="space-y-3 pt-1">
+                    <h4 className="font-heading text-lg sm:text-xl text-[#CCFF00] uppercase tracking-tight leading-snug group-hover:text-white transition-colors duration-200">
+                      {item.title}
+                    </h4>
 
+                    <p className="font-body text-xs text-zinc-400 leading-relaxed">
+                      {item.metrics}
+                    </p>
+
+                    <a
+                      href="#contact"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-sm bg-[#CCFF00] hover:bg-[#E5FE00] text-black font-body font-bold text-[10px] uppercase tracking-widest transition-all duration-200"
+                    >
+                      <span>VIEW EDIT</span>
+                      <ArrowRight className="w-3 h-3 text-black stroke-[2.5]" />
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ============================
+            LONG FORM — WIDESCREEN
+           ============================ */}
+        {showLongForm && (
+          <div className="space-y-6 pt-4">
+            <div className="flex items-center gap-2 border-b border-white/[0.08] pb-3">
+              <Film className="w-4 h-4 text-[#CCFF00]" />
+              <h3 className="font-heading text-sm sm:text-base text-white uppercase tracking-wider">
+                LONG FORM &amp; DOCUMENTARIES
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              {LONG_FORM_DATA.map((item, idx) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: idx * 0.1 }}
+                  className="group relative flex flex-col space-y-4 cursor-pointer"
+                >
+                  {/* Video Thumbnail Container */}
+                  <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-xl">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.03]"
+                    />
+
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
+
+                    {/* Center Play Button */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                      <div className="w-12 h-12 rounded-full bg-black/80 border border-[#CCFF00]/40 flex items-center justify-center text-[#CCFF00] group-hover:bg-[#CCFF00] group-hover:text-black group-hover:scale-110 transition-all duration-300">
+                        <Play className="w-4 h-4 fill-current translate-x-0.5" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Below Thumbnail: Views, Title, Description & Action Button */}
+                  <div className="space-y-3 pt-1">
+                    <span className="flex items-center gap-1.5 text-xs font-body font-bold text-[#CCFF00]">
+                      <Eye className="w-3.5 h-3.5" />
+                      {item.views}
+                    </span>
+
+                    <h4 className="font-heading text-lg text-[#CCFF00] uppercase tracking-tight leading-snug group-hover:text-white transition-colors duration-200">
+                      {item.title}
+                    </h4>
+
+                    <p className="font-body text-xs text-zinc-400 leading-relaxed">
+                      {item.metrics}
+                    </p>
+
+                    <a
+                      href="#contact"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-sm bg-[#CCFF00] hover:bg-[#E5FE00] text-black font-body font-bold text-[10px] uppercase tracking-widest transition-all duration-200"
+                    >
+                      <span>WATCH REEL</span>
+                      <ArrowRight className="w-3 h-3 text-black stroke-[2.5]" />
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

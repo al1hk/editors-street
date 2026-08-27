@@ -43,13 +43,13 @@ export default function HeroSection() {
       className="relative min-h-[85vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden bg-black py-16 sm:py-24 select-none"
     >
       {/* Background Animated Video Mosaic Grid */}
-      <div className="absolute inset-0 flex flex-col justify-center gap-3 sm:gap-4 pointer-events-none opacity-40 scale-105">
+      <div className="absolute inset-0 flex flex-col justify-center gap-3 sm:gap-4 pointer-events-none opacity-60 scale-105">
         {/* Row 1: Left scrolling */}
         <div className="flex gap-4 w-[200%] animate-marquee overflow-hidden" style={{ willChange: 'transform', contain: 'layout' }}>
           {ROW_1_TILES.map((clip, i) => (
             <div
               key={`r1-${i}`}
-              className="relative w-64 sm:w-80 md:w-96 aspect-video rounded-2xl overflow-hidden shrink-0 border border-white/10 brightness-85 bg-zinc-900"
+              className="relative w-64 sm:w-80 md:w-96 aspect-video overflow-hidden shrink-0 border border-[#CCFF00]/20 bg-zinc-900"
             >
               <img
                 src={clip.img}
@@ -59,7 +59,7 @@ export default function HeroSection() {
                 className="w-full h-full object-cover"
               />
               <div className="absolute top-3 left-3">
-                <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-black/80 text-[#CCFF00] border border-[#CCFF00]/30 tracking-wider">
+                <span className="text-[9px] font-mono font-bold px-2 py-0.5 bg-black/90 text-[#CCFF00] border border-[#CCFF00]/40 tracking-wider">
                   {clip.tag}
                 </span>
               </div>
@@ -75,7 +75,7 @@ export default function HeroSection() {
           {ROW_2_TILES.map((clip, i) => (
             <div
               key={`r2-${i}`}
-              className="relative w-64 sm:w-80 md:w-96 aspect-video rounded-2xl overflow-hidden shrink-0 border border-white/10 brightness-85 bg-zinc-900"
+              className="relative w-64 sm:w-80 md:w-96 aspect-video overflow-hidden shrink-0 border border-[#CCFF00]/20 bg-zinc-900"
             >
               <img
                 src={clip.img}
@@ -85,7 +85,7 @@ export default function HeroSection() {
                 className="w-full h-full object-cover"
               />
               <div className="absolute top-3 left-3">
-                <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-black/80 text-[#CCFF00] border border-[#CCFF00]/30 tracking-wider">
+                <span className="text-[9px] font-mono font-bold px-2 py-0.5 bg-black/90 text-[#CCFF00] border border-[#CCFF00]/40 tracking-wider">
                   {clip.tag}
                 </span>
               </div>
@@ -101,7 +101,7 @@ export default function HeroSection() {
           {ROW_3_TILES.map((clip, i) => (
             <div
               key={`r3-${i}`}
-              className="relative w-64 sm:w-80 md:w-96 aspect-video rounded-2xl overflow-hidden shrink-0 border border-white/10 brightness-85 bg-zinc-900"
+              className="relative w-64 sm:w-80 md:w-96 aspect-video overflow-hidden shrink-0 border border-[#CCFF00]/20 bg-zinc-900"
             >
               <img
                 src={clip.img}
@@ -111,7 +111,7 @@ export default function HeroSection() {
                 className="w-full h-full object-cover"
               />
               <div className="absolute top-3 left-3">
-                <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-black/80 text-[#CCFF00] border border-[#CCFF00]/30 tracking-wider">
+                <span className="text-[9px] font-mono font-bold px-2 py-0.5 bg-black/90 text-[#CCFF00] border border-[#CCFF00]/40 tracking-wider">
                   {clip.tag}
                 </span>
               </div>
@@ -120,40 +120,34 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Cinematic Vignette Overlays & Center Spotlight */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75vw] h-[45vh] bg-[#CCFF00]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-80 bg-black/60 backdrop-blur-[2px] pointer-events-none" />
+      {/* Cinematic overlay — flatter than before so the collage stays visible like the reference */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/60 pointer-events-none" />
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-72 bg-black/60 pointer-events-none" />
 
       {/* Central Foreground Hero Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center space-y-7 sm:space-y-9">
-        
-        {/* Main Hero Headline with Cyberpunk Glitch Loop */}
-        <h1 className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] uppercase tracking-[-0.03em] leading-[1.04]">
-          <span
-            className="cyber-glitch-loop text-[#CCFF00] drop-shadow-[0_4px_45px_rgba(204,255,0,0.45)]"
-            data-text="Social Media & Content Agency"
-          >
-            Social Media &amp; Content Agency
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center space-y-5 sm:space-y-6">
+
+        {/* Main Hero Headline */}
+        <h1 className="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-8xl uppercase tracking-tighter leading-[0.9] text-white">
+          Social Media &amp;{" "}
+          <span className="text-[#CCFF00]">
+            Content Agency
           </span>
         </h1>
 
         {/* Subtitle / Description */}
-        <p className="font-body text-sm sm:text-base md:text-[15px] lg:text-base text-white/80 max-w-xl mx-auto leading-[1.8] tracking-wide drop-shadow-md">
+        <p className="font-mono text-base sm:text-lg text-zinc-300 max-w-xl mx-auto leading-relaxed tracking-wide">
           We help creators, businesses, and brands create, manage, and grow their content across social media.
         </p>
 
-        {/* "GET IN TOUCH" Button with Glitch Effect */}
-        <div className="pt-2 sm:pt-4">
+        {/* Primary CTA Button */}
+        <div className="pt-2">
           <a
             href="#contact"
-            className="glitch-btn-master font-ui group px-9 sm:px-14 py-4 sm:py-4.5 rounded-full text-xs sm:text-sm font-bold tracking-[0.22em] uppercase shadow-[0_0_35px_rgba(204,255,0,0.5)] hover:shadow-[0_0_65px_rgba(204,255,0,0.9)] flex items-center gap-3 transition-all duration-300"
+            className="group inline-flex items-center justify-center gap-3 px-9 sm:px-12 py-4 sm:py-5 rounded-full bg-[#CCFF00] text-black font-mono font-bold text-xs sm:text-sm uppercase tracking-[0.18em] shadow-[0_0_30px_rgba(204,255,0,0.25)] hover:shadow-[0_0_45px_rgba(204,255,0,0.45)] transition-all duration-300 hover:scale-[1.04] active:scale-[0.98]"
           >
-            <span className="btn-glitch-text" data-text="GET IN TOUCH">
-              GET IN TOUCH
-            </span>
-            <ArrowRight className="w-4 h-4 text-black stroke-[3] transition-transform duration-300 group-hover:translate-x-1" />
+            <span>GET IN TOUCH</span>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-black stroke-[2.5] transition-transform duration-300 group-hover:translate-x-1" />
           </a>
         </div>
       </div>

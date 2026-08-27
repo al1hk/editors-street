@@ -2,43 +2,45 @@
 
 :root {
   --bg-primary: #000000;
-  --bg-surface: #0a0a0c;
-  --bg-surface-elevated: #141418;
-  --bg-olive: #131B13;
-  --bg-olive-dark: #0e140e;
+  --bg-surface: #0a0a0a;
+  --bg-surface-elevated: #111111;
   --accent-lime: #CCFF00;
   --accent-lime-hover: #D8FF33;
-  --accent-lime-glow: rgba(204, 255, 0, 0.45);
   --text-primary: #FFFFFF;
+  --text-muted: #A1A1AA;
   --border-subtle: rgba(255, 255, 255, 0.08);
 }
 
 /* =========================================
    TYPOGRAPHY SYSTEM
-   --font-heading : Archivo Black  — major headings (h1, h2, h3, section titles)
-   --font-body    : Space Mono     — body copy, descriptions, paragraphs
-   --font-ui      : Space Grotesk  — buttons, nav, labels, tags, small UI text
+   --font-heading : Unbounded (Google Font - 100% Free & Open Source)
+   --font-body    : Space Mono (Google Font - 100% Free & Open Source)
    ========================================= */
 
 .font-heading {
-  font-family: var(--font-heading), 'Arial Black', sans-serif;
-  font-weight: 400; /* Archivo Black is inherently black weight */
+  font-family: var(--font-heading), 'Unbounded', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.font-heading-heavy {
+  font-family: var(--font-heading), 'Unbounded', sans-serif;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.02em;
 }
 
-.font-body {
-  font-family: var(--font-body), 'Courier New', monospace;
-}
-
-.font-ui {
-  font-family: var(--font-ui), system-ui, sans-serif;
+.font-body,
+.font-ui,
+.font-mono {
+  font-family: var(--font-body), 'Space Mono', 'Courier New', monospace;
 }
 
 body {
   background-color: #000000;
   color: var(--text-primary);
-  font-family: var(--font-ui, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  font-family: var(--font-body), 'Space Mono', 'Courier New', monospace;
   overflow-x: hidden;
 }
 
@@ -99,138 +101,15 @@ section {
 }
 
 /* =========================================
-   AUTHENTIC CYBER GLITCH ANIMATIONS
+   MATURE LUXURY ANIMATIONS & UI STYLES
    ========================================= */
-
-@keyframes glitch-skew {
-  0% { transform: skew(0deg); }
-  20% { transform: skew(-2.5deg); }
-  40% { transform: skew(2deg); }
-  60% { transform: skew(-1.5deg); }
-  80% { transform: skew(2.5deg); }
-  100% { transform: skew(0deg); }
-}
-
-@keyframes glitch-slice-1 {
-  0% {
-    clip-path: inset(40% 0 61% 0);
-    transform: translate(-3px, -1px);
-  }
-  20% {
-    clip-path: inset(92% 0 1% 0);
-    transform: translate(3px, 1px);
-  }
-  40% {
-    clip-path: inset(10% 0 80% 0);
-    transform: translate(-2px, 2px);
-  }
-  60% {
-    clip-path: inset(60% 0 20% 0);
-    transform: translate(3px, -2px);
-  }
-  80% {
-    clip-path: inset(25% 0 58% 0);
-    transform: translate(-3px, 1px);
-  }
-  100% {
-    clip-path: inset(40% 0 61% 0);
-    transform: translate(0);
-  }
-}
-
-@keyframes glitch-slice-2 {
-  0% {
-    clip-path: inset(25% 0 58% 0);
-    transform: translate(3px, 1px);
-  }
-  20% {
-    clip-path: inset(54% 0 7% 0);
-    transform: translate(-3px, -1px);
-  }
-  40% {
-    clip-path: inset(70% 0 15% 0);
-    transform: translate(2px, -2px);
-  }
-  60% {
-    clip-path: inset(5% 0 85% 0);
-    transform: translate(-3px, 2px);
-  }
-  80% {
-    clip-path: inset(40% 0 43% 0);
-    transform: translate(3px, -1px);
-  }
-  100% {
-    clip-path: inset(25% 0 58% 0);
-    transform: translate(0);
-  }
-}
-
-/* Continuous Cyberpunk Glitch on Loop for Headings */
-@keyframes cyber-loop-1 {
-  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
-  10% { clip-path: inset(30% 0 55% 0); transform: translate(-5px, -1px); opacity: 0.95; }
-  14% { clip-path: inset(75% 0 12% 0); transform: translate(5px, 1px); opacity: 0.95; }
-  18% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
-  45% { clip-path: inset(12% 0 70% 0); transform: translate(-4px, 2px); opacity: 0.9; }
-  49% { clip-path: inset(60% 0 25% 0); transform: translate(4px, -1px); opacity: 0.9; }
-  53% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
-  80% { clip-path: inset(45% 0 40% 0); transform: translate(-6px, 1px); opacity: 0.95; }
-  84% { clip-path: inset(85% 0 5% 0); transform: translate(5px, -2px); opacity: 0.95; }
-  88% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
-}
-
-@keyframes cyber-loop-2 {
-  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
-  11% { clip-path: inset(60% 0 25% 0); transform: translate(5px, 1px); opacity: 0.95; }
-  15% { clip-path: inset(15% 0 70% 0); transform: translate(-5px, -1px); opacity: 0.95; }
-  19% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
-  46% { clip-path: inset(48% 0 35% 0); transform: translate(4px, -2px); opacity: 0.9; }
-  50% { clip-path: inset(22% 0 62% 0); transform: translate(-4px, 1px); opacity: 0.9; }
-  54% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
-  81% { clip-path: inset(18% 0 65% 0); transform: translate(6px, -1px); opacity: 0.95; }
-  85% { clip-path: inset(55% 0 30% 0); transform: translate(-5px, 2px); opacity: 0.95; }
-  89% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
-}
-
-.cyber-glitch-loop {
-  position: relative;
-  display: inline-block;
-}
-
-.cyber-glitch-loop::before,
-.cyber-glitch-loop::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  font-weight: inherit;
-  font-size: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  text-transform: inherit;
-}
-
-.cyber-glitch-loop::before {
-  color: #00F0FF;
-  animation: cyber-loop-1 3.5s steps(2, end) infinite;
-  z-index: -1;
-}
-
-.cyber-glitch-loop::after {
-  color: #FF0055;
-  animation: cyber-loop-2 3.5s steps(2, end) infinite;
-  z-index: -2;
-}
 
 @keyframes neon-pulse {
   0%, 100% {
-    box-shadow: 0 0 18px rgba(204, 255, 0, 0.5);
+    box-shadow: 0 0 14px rgba(204, 255, 0, 0.3);
   }
   50% {
-    box-shadow: 0 0 32px rgba(204, 255, 0, 0.75), 0 0 55px rgba(204, 255, 0, 0.3);
+    box-shadow: 0 0 24px rgba(204, 255, 0, 0.5);
   }
 }
 
@@ -246,142 +125,73 @@ section {
 }
 
 /* =========================================
-   NAV GLITCH LINK (FOR NAVBAR TEXT LINKS)
+   NAVIGATION LINKS (CLEAN & MATURE)
    ========================================= */
 
-.nav-glitch-link {
+.nav-glitch-link,
+.nav-link-clean {
   position: relative;
   display: inline-block;
-  transition: all 0.2s ease;
+  transition: color 0.25s ease;
 }
 
-.nav-glitch-link::before,
-.nav-glitch-link::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.nav-glitch-link:hover {
-  animation: glitch-skew 0.35s linear infinite;
+.nav-glitch-link:hover,
+.nav-link-clean:hover {
   color: #CCFF00;
-  text-shadow: 0 0 14px rgba(204, 255, 0, 0.6);
-}
-
-.nav-glitch-link:hover::before {
-  opacity: 0.95;
-  color: #00E5FF;
-  animation: glitch-slice-1 0.35s steps(2, end) infinite;
-  z-index: -1;
-}
-
-.nav-glitch-link:hover::after {
-  opacity: 0.95;
-  color: #FF0055;
-  animation: glitch-slice-2 0.35s steps(2, end) infinite;
-  z-index: -2;
 }
 
 /* =========================================
-   BUTTON GLITCH TEXT (CRISP BLACK TEXT ON LIME)
-   The pseudo-element glitch slices use DARK colors (not bright neon)
-   so the black label text stays clearly legible on the lime button.
+   LUXURY BUTTON SYSTEM
+   Clean, confident, mature interaction
    ========================================= */
 
-.btn-glitch-text {
-  position: relative;
-  display: inline-block;
-  color: #000000 !important;
-  font-weight: 800;
-  transition: color 0.1s ease;
-}
-
-.btn-glitch-text::before,
-.btn-glitch-text::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-  white-space: nowrap;
-  font-weight: 800;
-  color: #000000;
-}
-
-/* On hover: subtle glitch skew — text stays black */
-.glitch-btn-master:hover .btn-glitch-text {
-  animation: glitch-skew 0.5s linear infinite;
-  color: #000000 !important;
-}
-
-/* Glitch slices: use very dark, near-black offset copies — visible as fringing, NOT as colored text */
-.glitch-btn-master:hover .btn-glitch-text::before {
-  opacity: 0.55;
-  color: #001a00; /* very dark green tint — doesn't compete with black text */
-  animation: glitch-slice-1 0.5s steps(2, end) infinite;
-  z-index: -1;
-}
-
-.glitch-btn-master:hover .btn-glitch-text::after {
-  opacity: 0.45;
-  color: #1a0000; /* very dark red tint */
-  animation: glitch-slice-2 0.5s steps(2, end) infinite;
-  z-index: -2;
-}
-
-/* Master Glitch Button Container */
-.glitch-btn-master {
+.glitch-btn-master,
+.luxury-btn-primary {
   position: relative;
   background-color: #CCFF00;
   color: #000000 !important;
   font-weight: 700;
-  font-family: var(--font-ui), sans-serif;
-  letter-spacing: 0.16em;
+  font-family: var(--font-body), monospace;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   border-radius: 9999px;
   overflow: hidden;
-  box-shadow: 0 0 18px rgba(204, 255, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.15s ease, box-shadow 0.25s ease;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   will-change: transform;
 }
 
-.glitch-btn-master::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-  transition: transform 0.5s ease;
-  pointer-events: none;
-}
-
+.luxury-btn-primary:hover,
 .glitch-btn-master:hover {
   background-color: #D8FF33;
-  animation: neon-pulse 2s ease-in-out infinite;
-  box-shadow: 0 0 30px rgba(204, 255, 0, 0.7), 0 0 60px rgba(204, 255, 0, 0.3);
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-1px);
 }
 
-.glitch-btn-master:hover::before {
-  transform: translateX(200%);
-}
-
+.luxury-btn-primary:active,
 .glitch-btn-master:active {
-  transform: scale(0.97);
+  transform: translateY(0);
+}
+
+.luxury-btn-secondary {
+  position: relative;
+  background-color: transparent;
+  color: #ffffff;
+  font-family: var(--font-body), monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.luxury-btn-secondary:hover {
+  border-color: #CCFF00;
+  color: #CCFF00;
 }
 
 /* =========================================

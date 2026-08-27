@@ -69,9 +69,9 @@ export default function ServicesSection() {
   return (
     <section
       id="services"
-      className="relative py-28 sm:py-40 bg-black overflow-visible select-none"
+      className="relative py-28 sm:py-36 bg-black overflow-visible select-none border-t border-white/[0.08]"
     >
-      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 space-y-16 sm:space-y-24">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 space-y-16 sm:space-y-20">
         
         {/* Section Header */}
         <motion.div
@@ -79,22 +79,17 @@ export default function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="space-y-4"
+          className="space-y-3"
         >
           <div className="flex items-center gap-3">
-            <span className="w-10 h-[2px] bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]" />
-            <span className="font-ui text-[10px] font-bold tracking-[0.4em] text-[#CCFF00] uppercase">
+            <span className="w-8 h-[2px] bg-[#CCFF00]" />
+            <span className="font-body text-[10px] font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
               OUR SERVICES
             </span>
           </div>
 
-          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-tight">
-            <span
-              className="cyber-glitch-loop text-white"
-              data-text="What We Do"
-            >
-              What <span className="text-[#CCFF00] drop-shadow-[0_0_40px_rgba(204,255,0,0.4)]">We Do</span>
-            </span>
+          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[0.01em] leading-tight text-white">
+            What <span className="text-[#CCFF00]">We Do</span>
           </h2>
         </motion.div>
 
@@ -102,58 +97,51 @@ export default function ServicesSection() {
           STACKING SERVICES DECK ON PURE BLACK BACKGROUND:
           Each service moves up and sticks/stacks on top of the preceding service
         */}
-        <div className="relative space-y-10 sm:space-y-14 pb-16">
+        <div className="relative space-y-8 sm:space-y-12 pb-16">
           {SERVICES_DATA.map((service, index) => {
             const isHovered = hoveredService === service.id;
-            const topOffset = 110 + index * 24;
+            const topOffset = 100 + index * 20;
 
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 60 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, delay: index * 0.05, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
                 onMouseEnter={() => setHoveredService(service.id)}
                 onMouseLeave={() => setHoveredService(null)}
                 style={{
                   top: `${topOffset}px`,
                   zIndex: index + 10,
                 }}
-                className="sticky rounded-[28px] bg-gradient-to-br from-[#0e140e] via-[#090d09] to-[#040604] border-t border-l border-r border-white/15 hover:border-[#CCFF00]/70 p-8 sm:p-12 lg:p-14 shadow-[0_-20px_50px_rgba(0,0,0,0.95)] transition-all duration-300 backdrop-blur-2xl group overflow-hidden"
+                className="sticky rounded-2xl sm:rounded-3xl bg-[#0a0a0a] border border-white/[0.08] hover:border-white/20 p-8 sm:p-10 lg:p-12 shadow-[0_-15px_40px_rgba(0,0,0,0.9)] transition-all duration-300 group overflow-hidden"
               >
-                {/* Top Glowing Laser Edge */}
-                <div
-                  className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#CCFF00] to-transparent shadow-[0_0_20px_#CCFF00] transition-opacity duration-300 ${
-                    isHovered ? "opacity-100" : "opacity-40"
-                  }`}
-                />
-
-                {/* Content Layout (NO PILL TAG) */}
-                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+                {/* Content Layout */}
+                <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                   
-                  {/* Left: Prominent Number Only (No pill badge) */}
-                  <div className="lg:col-span-3 flex items-center lg:items-start">
-                    <span className="font-ui text-3xl sm:text-5xl font-bold text-[#CCFF00] tracking-wider transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-1 drop-shadow-[0_0_15px_rgba(204,255,0,0.4)]">
+                  {/* Left: Prominent Number (Anton) */}
+                  <div className="lg:col-span-2 flex items-center lg:items-start">
+                    <span className="font-heading text-3xl sm:text-5xl text-[#CCFF00] tracking-wider transition-transform duration-200 group-hover:translate-x-0.5">
                       {service.number}
                     </span>
                   </div>
 
-                  {/* Center: Main Title */}
-                  <div className="lg:col-span-5 space-y-2">
-                    <h3 className="font-heading text-2xl sm:text-3xl lg:text-[2rem] text-white group-hover:text-[#CCFF00] transition-colors duration-300 tracking-tight">
+                  {/* Center: Main Title (Anton) */}
+                  <div className="lg:col-span-5 space-y-1">
+                    <h3 className="font-heading text-2xl sm:text-3xl text-white group-hover:text-[#CCFF00] transition-colors duration-200 tracking-[0.01em]">
                       {service.title}
                     </h3>
                   </div>
 
-                  {/* Right: Description & Action Arrow Beacon */}
-                  <div className="lg:col-span-4 flex items-start justify-between gap-6">
-                    <p className="font-body text-sm sm:text-[13px] text-zinc-300 leading-[1.85]">
+                  {/* Right: Description (Space Mono) & Action Icon */}
+                  <div className="lg:col-span-5 flex items-start justify-between gap-6">
+                    <p className="font-body text-xs sm:text-sm text-zinc-400 leading-[1.85]">
                       {service.description}
                     </p>
 
-                    <div className="shrink-0 p-3 rounded-full border border-white/15 text-white/50 group-hover:border-[#CCFF00] group-hover:text-black group-hover:bg-[#CCFF00] group-hover:shadow-[0_0_20px_#CCFF00] transition-all duration-300">
-                      <ArrowUpRight className="w-5 h-5 stroke-[2.5] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <div className="shrink-0 w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-zinc-400 group-hover:border-[#CCFF00] group-hover:text-black group-hover:bg-[#CCFF00] transition-all duration-200">
+                      <ArrowUpRight className="w-4 h-4 stroke-[2] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
                   </div>
 

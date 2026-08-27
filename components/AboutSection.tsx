@@ -7,16 +7,15 @@ export default function AboutSection() {
   return (
     <section
       id="about-us"
-      className="relative py-28 sm:py-40 bg-transparent overflow-hidden select-none"
+      className="relative py-28 sm:py-40 bg-black overflow-hidden select-none border-t border-white/[0.08]"
     >
       {/* 
         =========================================================
-        LIME GREEN COLOR SHADING ON ABOUT SECTION
+        LIME GREEN AMBIENT GLOW — dialed down for solid black bg
         =========================================================
       */}
-      <div className="absolute top-1/4 -left-20 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] bg-[#CCFF00]/[0.085] rounded-full blur-[180px] pointer-events-none" />
-      <div className="absolute bottom-10 -right-20 w-[550px] sm:w-[800px] h-[550px] sm:h-[800px] bg-[#CCFF00]/[0.075] rounded-full blur-[170px] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/3 w-[650px] h-[400px] bg-[#142614]/50 rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute top-1/4 -left-20 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] bg-[#CCFF00]/[0.05] rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute bottom-10 -right-20 w-[550px] sm:w-[800px] h-[550px] sm:h-[800px] bg-[#CCFF00]/[0.045] rounded-full blur-[170px] pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 space-y-16 sm:space-y-24">
         
@@ -84,11 +83,11 @@ export default function AboutSection() {
 
         </div>
 
-        {/* "LEARN MORE ABOUT US" Glitch Button */}
+        {/* "LEARN MORE ABOUT US" Glitch Button — pill shape + solid accent fallback, matching reference's CTA */}
         <div className="pt-2">
           <a
             href="#contact"
-            className="glitch-btn-master font-ui group px-10 sm:px-14 py-4 sm:py-4.5 rounded-full text-xs sm:text-sm font-bold tracking-[0.22em] uppercase flex items-center gap-3 transition-all duration-300 w-fit"
+            className="glitch-btn-master group px-10 sm:px-14 py-4 sm:py-4.5 rounded-full font-mono text-xs sm:text-sm font-bold tracking-[0.22em] uppercase flex items-center gap-3 transition-all duration-300 w-fit bg-[#CCFF00] hover:bg-[#E5FF33] text-black hover:scale-[1.02]"
           >
             <span className="btn-glitch-text" data-text="LEARN MORE ABOUT US">
               LEARN MORE ABOUT US
