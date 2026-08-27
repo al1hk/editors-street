@@ -122,7 +122,7 @@ export default function ClientsSection() {
     >
       {/* Background Subtle Cyber Grid */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.035]"
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage:
             "linear-gradient(#CCFF00 1px, transparent 1px), linear-gradient(90deg, #CCFF00 1px, transparent 1px)",
@@ -130,23 +130,27 @@ export default function ClientsSection() {
         }}
       />
 
-      {/* Faint Ambient Center Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#CCFF00]/[0.03] rounded-full blur-[190px] pointer-events-none" />
+      {/* Radial lime glow left */}
+      <div className="absolute -left-40 top-1/3 w-[400px] h-[400px] bg-[#CCFF00]/[0.03] rounded-full blur-[80px] pointer-events-none" />
+      {/* Radial lime glow right */}
+      <div className="absolute -right-40 bottom-1/3 w-[350px] h-[350px] bg-[#CCFF00]/[0.025] rounded-full blur-[70px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 space-y-16 sm:space-y-20">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 space-y-12 sm:space-y-16">
         
         {/* Section Header */}
-        <div className="space-y-4 max-w-3xl">
-          {/* Small Neon Lime Top Label */}
+        <div className="space-y-6 max-w-3xl">
+          {/* Top label with decorative line */}
           <div className="flex items-center gap-3">
-            <span className="w-8 h-[2px] bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]" />
-            <span className="text-xs font-mono font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
+            <span className="w-2 h-2 rounded-full bg-[#CCFF00] shadow-[0_0_10px_#CCFF00]" />
+            <span className="w-8 h-[1.5px] bg-gradient-to-r from-[#CCFF00] to-[#CCFF00]/30" />
+            <span className="font-ui text-[10px] font-bold tracking-[0.45em] text-[#CCFF00] uppercase">
               OUR CLIENTS
             </span>
+            <span className="flex-1 h-[1px] bg-gradient-to-r from-[#CCFF00]/20 to-transparent" />
           </div>
 
           {/* Large Bold Futuristic Heading with Glitch Loop */}
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black font-['Space_Grotesk',sans-serif] uppercase tracking-[-0.03em] leading-[1.05] text-white">
+          <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl uppercase tracking-[-0.03em] leading-[1.05] text-white">
             <span
               className="cyber-glitch-loop"
               data-text="Creators, Businesses & Brands"
@@ -158,13 +162,9 @@ export default function ClientsSection() {
               We&apos;ve Worked With
             </span>
           </h2>
-
-          <p className="text-sm sm:text-base lg:text-lg text-zinc-400 font-normal leading-relaxed pt-1">
-            Creators, businesses, podcasts, and brands we&apos;ve worked with.
-          </p>
         </div>
 
-        {/* 
+        {/*
           FUTURISTIC 4-COLUMN DIGITAL INTERFACE CLIENT GRID
         */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
@@ -174,13 +174,13 @@ export default function ClientsSection() {
             return (
               <motion.div
                 key={client.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: idx * 0.04, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.4, delay: idx * 0.03, ease: "easeOut" }}
                 onMouseEnter={() => setHoveredId(client.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className="group relative p-6 sm:p-7 rounded-2xl bg-[#080b08] border border-white/[0.09] hover:border-[#CCFF00] hover:bg-[#0e140e] transition-all duration-300 flex flex-col justify-between min-h-[170px] sm:min-h-[190px] shadow-[0_8px_30px_rgba(0,0,0,0.85)] hover:shadow-[0_0_30px_rgba(204,255,0,0.22)] cursor-default overflow-hidden"
+                className="group relative p-5 sm:p-6 rounded-2xl bg-[#060908] border border-white/[0.08] hover:border-[#CCFF00]/70 hover:bg-[#0c120c] transition-all duration-300 flex flex-col justify-between min-h-[160px] sm:min-h-[185px] shadow-[0_8px_40px_rgba(0,0,0,0.9)] hover:shadow-[0_0_35px_rgba(204,255,0,0.18),inset_0_0_20px_rgba(204,255,0,0.03)] cursor-default overflow-hidden"
               >
                 {/* Subtle Inner Corner Decal */}
                 <div className="absolute top-2.5 left-2.5 w-1.5 h-1.5 border-t border-l border-white/20 group-hover:border-[#CCFF00] transition-colors" />
@@ -197,12 +197,14 @@ export default function ClientsSection() {
                 </div>
 
                 {/* Centered Client Logo Emblem + Name */}
-                <div className="my-auto py-3 text-center space-y-2.5">
-                  <div className="text-xl sm:text-2xl text-zinc-400 group-hover:text-[#CCFF00] group-hover:scale-115 transition-all duration-300 drop-shadow-[0_0_12px_rgba(204,255,0,0.5)]">
-                    {client.symbol}
+                <div className="my-auto py-3 text-center space-y-2">
+                  <div className="relative inline-flex items-center justify-center">
+                    <span className="text-2xl sm:text-3xl text-zinc-500 group-hover:text-[#CCFF00] group-hover:scale-110 transition-all duration-300 relative z-10">
+                      {client.symbol}
+                    </span>
                   </div>
 
-                  <h3 className="text-sm sm:text-base font-black font-['Space_Grotesk',sans-serif] tracking-wider text-zinc-200 group-hover:text-white uppercase transition-colors">
+                  <h3 className="text-xs sm:text-sm font-black font-['Space_Grotesk',sans-serif] tracking-[0.12em] text-zinc-300 group-hover:text-white uppercase transition-colors leading-tight">
                     {client.name}
                   </h3>
                 </div>

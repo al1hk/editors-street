@@ -40,7 +40,7 @@ const TEAM: TeamMember[] = [
 export default function TeamSection() {
   return (
     <section
-      id="team"
+      id="our-team"
       className="relative py-28 sm:py-40 bg-black overflow-hidden select-none border-t border-white/[0.06]"
     >
       {/* Subtle Cyber Grid */}
@@ -61,7 +61,14 @@ export default function TeamSection() {
 
         {/* Header */}
         <div className="space-y-5 max-w-3xl">
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black font-['Space_Grotesk',sans-serif] uppercase tracking-[-0.03em] leading-tight text-white">
+          <div className="flex items-center gap-3">
+            <span className="w-10 h-[2px] bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]" />
+            <span className="font-ui text-[10px] font-bold tracking-[0.4em] text-[#CCFF00] uppercase">
+              POST PRODUCTION TALENT
+            </span>
+          </div>
+
+          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-tight text-white">
             <span className="cyber-glitch-loop" data-text="Meet Our Team">
               Meet Our{" "}
               <span className="text-[#CCFF00] drop-shadow-[0_0_40px_rgba(204,255,0,0.4)]">
@@ -70,7 +77,7 @@ export default function TeamSection() {
             </span>
           </h2>
 
-          <p className="text-base sm:text-lg lg:text-xl text-zinc-400 leading-relaxed max-w-2xl">
+          <p className="font-body text-sm sm:text-base text-zinc-400 leading-[1.8] max-w-xl">
             Our team of editors, designers, strategists, and social media
             specialists works together to create and manage content for our
             clients.

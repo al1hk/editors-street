@@ -59,7 +59,14 @@ export default function OurWorkSection() {
         
         {/* Section Header */}
         <div className="space-y-4">
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black font-['Space_Grotesk',sans-serif] uppercase tracking-[-0.03em] leading-tight">
+          <div className="flex items-center gap-3">
+            <span className="w-10 h-[2px] bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]" />
+            <span className="font-ui text-[10px] font-bold tracking-[0.4em] text-[#CCFF00] uppercase">
+              PORTFOLIO SHOWCASE
+            </span>
+          </div>
+
+          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-tight">
             <span
               className="cyber-glitch-loop text-white"
               data-text="Our Work"
@@ -68,7 +75,7 @@ export default function OurWorkSection() {
             </span>
           </h2>
 
-          <p className="text-base sm:text-lg lg:text-xl text-zinc-300 font-normal max-w-2xl leading-relaxed">
+          <p className="font-body text-sm sm:text-base text-zinc-300 max-w-xl leading-[1.8]">
             A selection of content we&apos;ve created for our clients.
           </p>
         </div>

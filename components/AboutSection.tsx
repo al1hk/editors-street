@@ -24,12 +24,12 @@ export default function AboutSection() {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <span className="w-10 h-[2px] bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]" />
-            <span className="text-xs font-mono font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
+            <span className="font-ui text-[10px] font-bold tracking-[0.4em] text-[#CCFF00] uppercase">
               ABOUT US
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black font-['Space_Grotesk',sans-serif] uppercase tracking-[-0.03em] leading-[1.02]">
+          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-[1.02]">
             <span
               className="cyber-glitch-loop text-white"
               data-text="About Editors Street"
@@ -45,7 +45,7 @@ export default function AboutSection() {
           {/* Paragraph 1: Main Statement */}
           <div className="relative pl-6 sm:pl-10 border-l-2 border-[#CCFF00]">
             <span className="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-[#CCFF00] shadow-[0_0_10px_#CCFF00]" />
-            <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
+            <p className="font-body text-xl sm:text-2xl lg:text-3xl font-normal text-white leading-snug">
               Editors Street is a content agency helping{" "}
               <span className="text-[#CCFF00] drop-shadow-[0_0_20px_rgba(204,255,0,0.3)]">creators, businesses, and brands</span>{" "}
               manage and produce content for social media.
@@ -60,22 +60,22 @@ export default function AboutSection() {
             
             {/* Paragraph 2: Scope */}
             <div className="space-y-3">
-              <div className="text-[11px] font-mono text-[#CCFF00] tracking-[0.25em] uppercase font-bold flex items-center gap-2">
+              <div className="font-ui text-[10px] font-bold text-[#CCFF00] tracking-[0.3em] uppercase flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] shadow-[0_0_6px_#CCFF00]" />
                 <span>SCOPE &amp; PRODUCTION</span>
               </div>
-              <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
+              <p className="font-body text-sm sm:text-base text-zinc-300 leading-[1.85]">
                 Our team handles everything from content planning and video editing to social media management, podcast production, and creative design.
               </p>
             </div>
 
             {/* Paragraph 3: Partnership */}
             <div className="space-y-3">
-              <div className="text-[11px] font-mono text-[#CCFF00] tracking-[0.25em] uppercase font-bold flex items-center gap-2">
+              <div className="font-ui text-[10px] font-bold text-[#CCFF00] tracking-[0.3em] uppercase flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00] shadow-[0_0_6px_#CCFF00]" />
                 <span>CLIENT COLLABORATION</span>
               </div>
-              <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
+              <p className="font-body text-sm sm:text-base text-zinc-300 leading-[1.85]">
                 We work closely with our clients to create consistent, high-quality content that fits their brand and goals.
               </p>
             </div>
@@ -88,7 +88,7 @@ export default function AboutSection() {
         <div className="pt-2">
           <a
             href="#contact"
-            className="glitch-btn-master group px-10 sm:px-14 py-4 sm:py-4.5 rounded-full text-xs sm:text-sm font-black tracking-[0.22em] uppercase flex items-center gap-3 transition-all duration-300 w-fit"
+            className="glitch-btn-master font-ui group px-10 sm:px-14 py-4 sm:py-4.5 rounded-full text-xs sm:text-sm font-bold tracking-[0.22em] uppercase flex items-center gap-3 transition-all duration-300 w-fit"
           >
             <span className="btn-glitch-text" data-text="LEARN MORE ABOUT US">
               LEARN MORE ABOUT US

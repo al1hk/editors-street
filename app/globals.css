@@ -13,11 +13,62 @@
   --border-subtle: rgba(255, 255, 255, 0.08);
 }
 
+/* =========================================
+   TYPOGRAPHY SYSTEM
+   --font-heading : Archivo Black  — major headings (h1, h2, h3, section titles)
+   --font-body    : Space Mono     — body copy, descriptions, paragraphs
+   --font-ui      : Space Grotesk  — buttons, nav, labels, tags, small UI text
+   ========================================= */
+
+.font-heading {
+  font-family: var(--font-heading), 'Arial Black', sans-serif;
+  font-weight: 400; /* Archivo Black is inherently black weight */
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.font-body {
+  font-family: var(--font-body), 'Courier New', monospace;
+}
+
+.font-ui {
+  font-family: var(--font-ui), system-ui, sans-serif;
+}
+
 body {
   background-color: #000000;
   color: var(--text-primary);
-  font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif);
+  font-family: var(--font-ui, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
   overflow-x: hidden;
+}
+
+/* =========================================
+   PERFORMANCE & GPU COMPOSITING
+   ========================================= */
+
+/* Promote sections to their own stacking context to prevent cross-section repaints */
+section {
+  isolation: isolate;
+  contain: layout style;
+}
+
+/* Animate only GPU-friendly properties. Avoid animating width/height/top/left/margin */
+.animate-marquee,
+.glitch-btn-master,
+.nav-glitch-link {
+  transform: translateZ(0);
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .cyber-glitch-loop::before,
+  .cyber-glitch-loop::after,
+  .nav-glitch-link:hover,
+  .btn-glitch-text,
+  .glitch-btn-master:hover {
+    animation: none !important;
+  }
 }
 
 /* Hide Default Windows Cursor on Desktop so ONLY the Custom Cyber Cursor is visible */
@@ -176,20 +227,22 @@ body {
 
 @keyframes neon-pulse {
   0%, 100% {
-    box-shadow: 0 0 22px rgba(204, 255, 0, 0.45), 0 0 45px rgba(204, 255, 0, 0.2);
+    box-shadow: 0 0 18px rgba(204, 255, 0, 0.5);
   }
   50% {
-    box-shadow: 0 0 38px rgba(204, 255, 0, 0.8), 0 0 85px rgba(204, 255, 0, 0.45);
+    box-shadow: 0 0 32px rgba(204, 255, 0, 0.75), 0 0 55px rgba(204, 255, 0, 0.3);
   }
 }
 
-/* Marquee */
+/* Marquee with GPU-composited translate3d */
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 .animate-marquee {
   animation: marquee 28s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* =========================================
@@ -237,14 +290,16 @@ body {
 
 /* =========================================
    BUTTON GLITCH TEXT (CRISP BLACK TEXT ON LIME)
+   The pseudo-element glitch slices use DARK colors (not bright neon)
+   so the black label text stays clearly legible on the lime button.
    ========================================= */
 
 .btn-glitch-text {
   position: relative;
   display: inline-block;
   color: #000000 !important;
-  font-weight: 900;
-  transition: all 0.2s ease;
+  font-weight: 800;
+  transition: color 0.1s ease;
 }
 
 .btn-glitch-text::before,
@@ -258,26 +313,28 @@ body {
   opacity: 0;
   pointer-events: none;
   white-space: nowrap;
-  font-weight: 900;
+  font-weight: 800;
+  color: #000000;
 }
 
+/* On hover: subtle glitch skew — text stays black */
 .glitch-btn-master:hover .btn-glitch-text {
-  animation: glitch-skew 0.32s linear infinite;
+  animation: glitch-skew 0.5s linear infinite;
   color: #000000 !important;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
 }
 
+/* Glitch slices: use very dark, near-black offset copies — visible as fringing, NOT as colored text */
 .glitch-btn-master:hover .btn-glitch-text::before {
-  opacity: 0.9;
-  color: #00F0FF;
-  animation: glitch-slice-1 0.35s steps(2, end) infinite;
+  opacity: 0.55;
+  color: #001a00; /* very dark green tint — doesn't compete with black text */
+  animation: glitch-slice-1 0.5s steps(2, end) infinite;
   z-index: -1;
 }
 
 .glitch-btn-master:hover .btn-glitch-text::after {
-  opacity: 0.9;
-  color: #FF0055;
-  animation: glitch-slice-2 0.35s steps(2, end) infinite;
+  opacity: 0.45;
+  color: #1a0000; /* very dark red tint */
+  animation: glitch-slice-2 0.5s steps(2, end) infinite;
   z-index: -2;
 }
 
@@ -286,17 +343,18 @@ body {
   position: relative;
   background-color: #CCFF00;
   color: #000000 !important;
-  font-weight: 900;
-  font-family: var(--font-sans), sans-serif;
+  font-weight: 700;
+  font-family: var(--font-ui), sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   border-radius: 9999px;
   overflow: hidden;
-  box-shadow: 0 0 22px rgba(204, 255, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
-  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 18px rgba(204, 255, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.15s ease, box-shadow 0.25s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  will-change: transform;
 }
 
 .glitch-btn-master::before {
@@ -306,16 +364,16 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
-  transition: transform 0.6s ease;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transition: transform 0.5s ease;
   pointer-events: none;
 }
 
 .glitch-btn-master:hover {
   background-color: #D8FF33;
-  animation: neon-pulse 1.8s ease-in-out infinite;
-  box-shadow: 0 0 40px rgba(204, 255, 0, 0.85), 0 0 85px rgba(204, 255, 0, 0.45);
-  transform: translateY(-2px) scale(1.03);
+  animation: neon-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 30px rgba(204, 255, 0, 0.7), 0 0 60px rgba(204, 255, 0, 0.3);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .glitch-btn-master:hover::before {
@@ -324,4 +382,40 @@ body {
 
 .glitch-btn-master:active {
   transform: scale(0.97);
+}
+
+/* =========================================
+   CONTACT FORM — CYBER INPUT / SELECT
+   ========================================= */
+
+.cyber-input::placeholder {
+  color: rgba(161, 161, 170, 0.45); /* zinc-400 at 45% */
+  font-family: var(--font-body), monospace;
+  font-size: 0.8125rem; /* 13px */
+}
+
+.cyber-input:focus {
+  color: #ffffff;
+}
+
+/* Override browser autofill yellow background */
+.cyber-input:-webkit-autofill,
+.cyber-input:-webkit-autofill:hover,
+.cyber-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0px 1000px #0a0a0a inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Select dropdown arrow — custom lime chevron */
+.cyber-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23CCFF00' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px !important;
+}
+
+.cyber-select option {
+  background-color: #0a0a0a;
+  color: #ffffff;
 }

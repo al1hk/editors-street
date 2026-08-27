@@ -83,12 +83,12 @@ export default function ServicesSection() {
         >
           <div className="flex items-center gap-3">
             <span className="w-10 h-[2px] bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]" />
-            <span className="text-xs font-mono font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
+            <span className="font-ui text-[10px] font-bold tracking-[0.4em] text-[#CCFF00] uppercase">
               OUR SERVICES
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black font-['Space_Grotesk',sans-serif] uppercase tracking-[-0.03em] leading-tight">
+          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-tight">
             <span
               className="cyber-glitch-loop text-white"
               data-text="What We Do"
@@ -134,21 +134,21 @@ export default function ServicesSection() {
                   
                   {/* Left: Prominent Number Only (No pill badge) */}
                   <div className="lg:col-span-3 flex items-center lg:items-start">
-                    <span className="text-3xl sm:text-5xl font-mono font-black text-[#CCFF00] tracking-wider transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-1 drop-shadow-[0_0_15px_rgba(204,255,0,0.4)]">
+                    <span className="font-ui text-3xl sm:text-5xl font-bold text-[#CCFF00] tracking-wider transition-transform duration-300 group-hover:scale-105 group-hover:translate-x-1 drop-shadow-[0_0_15px_rgba(204,255,0,0.4)]">
                       {service.number}
                     </span>
                   </div>
 
                   {/* Center: Main Title */}
                   <div className="lg:col-span-5 space-y-2">
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black font-['Space_Grotesk',sans-serif] text-white group-hover:text-[#CCFF00] transition-colors duration-300">
+                    <h3 className="font-heading text-2xl sm:text-3xl lg:text-[2rem] text-white group-hover:text-[#CCFF00] transition-colors duration-300 tracking-tight">
                       {service.title}
                     </h3>
                   </div>
 
                   {/* Right: Description & Action Arrow Beacon */}
                   <div className="lg:col-span-4 flex items-start justify-between gap-6">
-                    <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-normal">
+                    <p className="font-body text-sm sm:text-[13px] text-zinc-300 leading-[1.85]">
                       {service.description}
                     </p>
 

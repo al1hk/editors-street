@@ -54,12 +54,12 @@ export default function ResultsSection() {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <span className="w-8 h-[2px] bg-[#CCFF00] shadow-[0_0_8px_#CCFF00]" />
-            <span className="text-xs font-mono font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
+            <span className="font-ui text-[10px] font-bold tracking-[0.4em] text-[#CCFF00] uppercase">
               RESULTS
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black font-['Space_Grotesk',sans-serif] uppercase tracking-[-0.03em] leading-tight">
+          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-tight">
             <span
               className="cyber-glitch-loop text-white"
               data-text="Our Results"
