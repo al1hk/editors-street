@@ -1,26 +1,327 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg-primary: #000000;
+  --bg-surface: #0a0a0c;
+  --bg-surface-elevated: #141418;
+  --bg-olive: #131B13;
+  --bg-olive-dark: #0e140e;
+  --accent-lime: #CCFF00;
+  --accent-lime-hover: #D8FF33;
+  --accent-lime-glow: rgba(204, 255, 0, 0.45);
+  --text-primary: #FFFFFF;
+  --border-subtle: rgba(255, 255, 255, 0.08);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #000000;
+  color: var(--text-primary);
+  font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif);
+  overflow-x: hidden;
+}
+
+/* Hide Default Windows Cursor on Desktop so ONLY the Custom Cyber Cursor is visible */
+@media (pointer: fine) {
+  *, *::before, *::after, html, body, a, button, input, textarea, select, [role="button"] {
+    cursor: none !important;
+  }
+}
+
+::selection {
+  background-color: #CCFF00;
+  color: #000000;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #CCFF00;
+}
+
+/* =========================================
+   AUTHENTIC CYBER GLITCH ANIMATIONS
+   ========================================= */
+
+@keyframes glitch-skew {
+  0% { transform: skew(0deg); }
+  20% { transform: skew(-2.5deg); }
+  40% { transform: skew(2deg); }
+  60% { transform: skew(-1.5deg); }
+  80% { transform: skew(2.5deg); }
+  100% { transform: skew(0deg); }
+}
+
+@keyframes glitch-slice-1 {
+  0% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(-3px, -1px);
+  }
+  20% {
+    clip-path: inset(92% 0 1% 0);
+    transform: translate(3px, 1px);
+  }
+  40% {
+    clip-path: inset(10% 0 80% 0);
+    transform: translate(-2px, 2px);
+  }
+  60% {
+    clip-path: inset(60% 0 20% 0);
+    transform: translate(3px, -2px);
+  }
+  80% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(-3px, 1px);
+  }
+  100% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-slice-2 {
+  0% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(3px, 1px);
+  }
+  20% {
+    clip-path: inset(54% 0 7% 0);
+    transform: translate(-3px, -1px);
+  }
+  40% {
+    clip-path: inset(70% 0 15% 0);
+    transform: translate(2px, -2px);
+  }
+  60% {
+    clip-path: inset(5% 0 85% 0);
+    transform: translate(-3px, 2px);
+  }
+  80% {
+    clip-path: inset(40% 0 43% 0);
+    transform: translate(3px, -1px);
+  }
+  100% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(0);
+  }
+}
+
+/* Continuous Cyberpunk Glitch on Loop for Headings */
+@keyframes cyber-loop-1 {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
+  10% { clip-path: inset(30% 0 55% 0); transform: translate(-5px, -1px); opacity: 0.95; }
+  14% { clip-path: inset(75% 0 12% 0); transform: translate(5px, 1px); opacity: 0.95; }
+  18% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
+  45% { clip-path: inset(12% 0 70% 0); transform: translate(-4px, 2px); opacity: 0.9; }
+  49% { clip-path: inset(60% 0 25% 0); transform: translate(4px, -1px); opacity: 0.9; }
+  53% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
+  80% { clip-path: inset(45% 0 40% 0); transform: translate(-6px, 1px); opacity: 0.95; }
+  84% { clip-path: inset(85% 0 5% 0); transform: translate(5px, -2px); opacity: 0.95; }
+  88% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
+}
+
+@keyframes cyber-loop-2 {
+  0%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
+  11% { clip-path: inset(60% 0 25% 0); transform: translate(5px, 1px); opacity: 0.95; }
+  15% { clip-path: inset(15% 0 70% 0); transform: translate(-5px, -1px); opacity: 0.95; }
+  19% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
+  46% { clip-path: inset(48% 0 35% 0); transform: translate(4px, -2px); opacity: 0.9; }
+  50% { clip-path: inset(22% 0 62% 0); transform: translate(-4px, 1px); opacity: 0.9; }
+  54% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
+  81% { clip-path: inset(18% 0 65% 0); transform: translate(6px, -1px); opacity: 0.95; }
+  85% { clip-path: inset(55% 0 30% 0); transform: translate(-5px, 2px); opacity: 0.95; }
+  89% { clip-path: inset(0 0 100% 0); transform: translate(0); opacity: 0; }
+}
+
+.cyber-glitch-loop {
+  position: relative;
+  display: inline-block;
+}
+
+.cyber-glitch-loop::before,
+.cyber-glitch-loop::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  font-weight: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+}
+
+.cyber-glitch-loop::before {
+  color: #00F0FF;
+  animation: cyber-loop-1 3.5s steps(2, end) infinite;
+  z-index: -1;
+}
+
+.cyber-glitch-loop::after {
+  color: #FF0055;
+  animation: cyber-loop-2 3.5s steps(2, end) infinite;
+  z-index: -2;
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 22px rgba(204, 255, 0, 0.45), 0 0 45px rgba(204, 255, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 38px rgba(204, 255, 0, 0.8), 0 0 85px rgba(204, 255, 0, 0.45);
+  }
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* =========================================
+   NAV GLITCH LINK (FOR NAVBAR TEXT LINKS)
+   ========================================= */
+
+.nav-glitch-link {
+  position: relative;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.nav-glitch-link::before,
+.nav-glitch-link::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.nav-glitch-link:hover {
+  animation: glitch-skew 0.35s linear infinite;
+  color: #CCFF00;
+  text-shadow: 0 0 14px rgba(204, 255, 0, 0.6);
+}
+
+.nav-glitch-link:hover::before {
+  opacity: 0.95;
+  color: #00E5FF;
+  animation: glitch-slice-1 0.35s steps(2, end) infinite;
+  z-index: -1;
+}
+
+.nav-glitch-link:hover::after {
+  opacity: 0.95;
+  color: #FF0055;
+  animation: glitch-slice-2 0.35s steps(2, end) infinite;
+  z-index: -2;
+}
+
+/* =========================================
+   BUTTON GLITCH TEXT (CRISP BLACK TEXT ON LIME)
+   ========================================= */
+
+.btn-glitch-text {
+  position: relative;
+  display: inline-block;
+  color: #000000 !important;
+  font-weight: 900;
+  transition: all 0.2s ease;
+}
+
+.btn-glitch-text::before,
+.btn-glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  font-weight: 900;
+}
+
+.glitch-btn-master:hover .btn-glitch-text {
+  animation: glitch-skew 0.32s linear infinite;
+  color: #000000 !important;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+}
+
+.glitch-btn-master:hover .btn-glitch-text::before {
+  opacity: 0.9;
+  color: #00F0FF;
+  animation: glitch-slice-1 0.35s steps(2, end) infinite;
+  z-index: -1;
+}
+
+.glitch-btn-master:hover .btn-glitch-text::after {
+  opacity: 0.9;
+  color: #FF0055;
+  animation: glitch-slice-2 0.35s steps(2, end) infinite;
+  z-index: -2;
+}
+
+/* Master Glitch Button Container */
+.glitch-btn-master {
+  position: relative;
+  background-color: #CCFF00;
+  color: #000000 !important;
+  font-weight: 900;
+  font-family: var(--font-sans), sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: 0 0 22px rgba(204, 255, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s ease, box-shadow 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glitch-btn-master::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.glitch-btn-master:hover {
+  background-color: #D8FF33;
+  animation: neon-pulse 1.8s ease-in-out infinite;
+  box-shadow: 0 0 40px rgba(204, 255, 0, 0.85), 0 0 85px rgba(204, 255, 0, 0.45);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.glitch-btn-master:hover::before {
+  transform: translateX(200%);
+}
+
+.glitch-btn-master:active {
+  transform: scale(0.97);
 }
