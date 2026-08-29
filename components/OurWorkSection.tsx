@@ -10,30 +10,34 @@ interface VideoItem {
   views: string;
   image: string;
   metrics: string;
+  url?: string;
   tag?: string;
 }
 
 const LONG_FORM_DATA: VideoItem[] = [
   {
     id: "long-1",
-    title: "DOCUMENTARY MASTERCLASS",
-    views: "1.4M Views",
-    image: "/assets/hero/clip3.jpg",
-    metrics: "Cinematic grade, archive research & narrative editing.",
+    title: "LONG FORM PRODUCTION // 01",
+    views: "198K Views",
+    image: "https://img.youtube.com/vi/ZAW7F4lg848/hqdefault.jpg",
+    url: "https://youtu.be/ZAW7F4lg848?si=CVUVRMAoAsfIAy2q",
+    metrics: "Narrative pacing, archival research, cinematic grade & master sound.",
   },
   {
     id: "long-2",
-    title: "SILICON VALLEY TECH FOUNDER",
-    views: "680K Views",
-    image: "/assets/hero/clip4.jpg",
-    metrics: "Multicam timeline cut, dynamic lower thirds & audio master.",
+    title: "LONG FORM PRODUCTION // 02",
+    views: "186K Views",
+    image: "https://img.youtube.com/vi/G5qiktcrB8k/hqdefault.jpg",
+    url: "https://youtu.be/G5qiktcrB8k?si=se5509hzW-yDDchU",
+    metrics: "Multicam editing, dynamic typography, retention hooks & sound design.",
   },
   {
     id: "long-3",
-    title: "STUDIO PODCAST & VISUAL CUT",
-    views: "920K Views",
-    image: "/assets/hero/clip1.jpg",
-    metrics: "Multi-track sync, Dolby audio mix & dynamic video highlights.",
+    title: "LONG FORM PRODUCTION // 03",
+    views: "118K Views",
+    image: "https://img.youtube.com/vi/y7MeLsFJCAE/hqdefault.jpg",
+    url: "https://youtu.be/y7MeLsFJCAE?si=09304DbNZiVdmIEP",
+    metrics: "Documentary storytelling, color grade & master audio delivery.",
   },
 ];
 
@@ -120,8 +124,12 @@ export default function OurWorkSection() {
                   transition={{ duration: 0.45, delay: idx * 0.1 }}
                   className="group relative cursor-pointer"
                 >
-                  {/* Video Thumbnail Container */}
-                  <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-xl">
+                  <a
+                    href={item.url || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block relative aspect-video w-full rounded-xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-xl"
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
@@ -145,7 +153,7 @@ export default function OurWorkSection() {
                         {item.views}
                       </span>
                     </div>
-                  </div>
+                  </a>
                 </motion.div>
               ))}
             </div>
