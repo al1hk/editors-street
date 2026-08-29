@@ -13,9 +13,7 @@ const NAV_ITEMS: NavItem[] = [
   { name: "About Us", href: "#about-us" },
   { name: "Services", href: "#services" },
   { name: "Our Work", href: "#our-work" },
-  { name: "Clients", href: "#clients" },
   { name: "Our Team", href: "#our-team" },
-  { name: "Reviews", href: "#testimonials" },
   { name: "Contact", href: "#contact" },
 ];
 

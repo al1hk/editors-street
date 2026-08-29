@@ -35,7 +35,6 @@ export default function Footer() {
   const NAV_LINKS = [
     { name: "Our Work", href: "#our-work" },
     { name: "Services", href: "#services" },
-    { name: "Clients", href: "#clients" },
     { name: "Our Team", href: "#our-team" },
     { name: "About Us", href: "#about-us" },
     { name: "Contact", href: "#contact" },
@@ -49,31 +48,6 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-black text-white overflow-hidden border-t border-white/[0.08] select-none">
-      {/* JOIN OUR COMMUNITY Banner — Matches Reference Image */}
-      <div className="border-b border-white/[0.08] py-16 sm:py-20 text-center px-6">
-        <div className="max-w-3xl mx-auto space-y-4">
-          <h3 className="font-heading text-3xl sm:text-4xl md:text-5xl text-[#CCFF00] uppercase tracking-tight">
-            JOIN OUR COMMUNITY
-          </h3>
-          <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed">
-            Subscribe to get production updates, retention breakdowns, and creative editing insights.
-          </p>
-          <div className="pt-3 max-w-md mx-auto flex items-center gap-2">
-            <input
-              type="email"
-              placeholder="ENTER YOUR EMAIL..."
-              className="flex-1 bg-zinc-950 border border-white/10 px-4 py-2.5 rounded-sm text-xs font-body text-white placeholder:text-zinc-600 outline-none focus:border-[#CCFF00]"
-            />
-            <button
-              onClick={() => alert("Thank you for subscribing!")}
-              className="px-5 py-2.5 rounded-sm bg-[#CCFF00] hover:bg-[#E5FE00] text-black font-body font-bold text-xs uppercase tracking-wider transition-all"
-            >
-              JOIN
-            </button>
-          </div>
-        </div>
-      </div>
-
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 pt-16 sm:pt-20 pb-12 space-y-14">
         
         {/* Top & Middle Grid */}
@@ -170,14 +144,9 @@ export default function Footer() {
             </span>
           </div>
 
-          {/* Bottom Copyright and Status Bar */}
+          {/* Bottom Copyright Bar */}
           <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-[11px] font-body text-zinc-500">
             <p>© 2026 Editors Street. All rights reserved.</p>
-
-            <div className="flex items-center gap-2 text-zinc-500">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#CCFF00]" />
-              <span>CONTENT &amp; POST-PRODUCTION // 2026</span>
-            </div>
           </div>
         </div>
 

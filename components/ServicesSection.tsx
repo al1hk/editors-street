@@ -61,6 +61,14 @@ const SERVICES_DATA: ServiceItem[] = [
       "We create product videos, UGC-style ads, and social media advertisements designed for your products.",
     accent: "rgba(204, 255, 0, 0.15)",
   },
+  {
+    id: "ai-real-estate",
+    number: "07",
+    title: "AI Real Estate Videos",
+    description:
+      "Turn property photos into professional AI videos for your listings. We provide the script, create the AI footage, and edit everything into a finished video ready for social media.",
+    accent: "rgba(204, 255, 0, 0.15)",
+  },
 ];
 
 export default function ServicesSection() {
