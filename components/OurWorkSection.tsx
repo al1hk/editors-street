@@ -44,27 +44,24 @@ const LONG_FORM_DATA: VideoItem[] = [
 const REAL_ESTATE_DATA: VideoItem[] = [
   {
     id: "re-1",
-    title: "LUXURY MODERN VILLA CINEMATIC TOUR",
+    title: "Real Estate 01",
     views: "420K Views",
     image: "/assets/hero/clip2.jpg",
-    metrics: "FPV drone integration, dynamic speed ramping & luxury color grade.",
-    tag: "Luxury Listing",
+    metrics: "",
   },
   {
     id: "re-2",
-    title: "ARCHITECTURAL PENTHOUSE SHOWCASE",
+    title: "Real Estate 02",
     views: "310K Views",
     image: "/assets/hero/clip3.jpg",
-    metrics: "Stabilized 4K walkthrough, twilight transition & ambient audio design.",
-    tag: "Penthouse",
+    metrics: "",
   },
   {
     id: "re-3",
-    title: "ESTATE PROPERTY WALKTHROUGH & AGENT SPOTLIGHT",
+    title: "Real Estate 03",
     views: "250K Views",
     image: "/assets/hero/clip4.jpg",
-    metrics: "Agent soundbite editing, branded lower-thirds & aerial property mapping.",
-    tag: "Commercial / Estate",
+    metrics: "",
   },
 ];
 
@@ -160,66 +157,66 @@ export default function OurWorkSection() {
         </div>
 
         {/* ============================
-            REAL ESTATE VIDEOS — GALLERY
+            REAL ESTATE VIDEOS — VERTICAL GRID
            ============================ */}
         <div className="space-y-8 pt-6">
           <div className="space-y-3 border-b border-white/[0.08] pb-6">
-              <div className="flex items-center gap-3">
-                <span className="w-6 h-[2px] bg-[#CCFF00]" />
-                <span className="font-body text-[10px] font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
-                  PROPERTY PORTFOLIO
-                </span>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                <h3 className="font-heading text-3xl sm:text-5xl lg:text-6xl text-white uppercase tracking-tight leading-none">
-                  REAL ESTATE <span className="text-[#CCFF00]">VIDEOS</span>
-                </h3>
-                <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-sm">
-                  A selection of our real estate video work.
-                </p>
-              </div>
+            <div className="flex items-center gap-3">
+              <span className="w-6 h-[2px] bg-[#CCFF00]" />
+              <span className="font-body text-[10px] font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
+                PROPERTY PORTFOLIO
+              </span>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              {REAL_ESTATE_DATA.map((item, idx) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: idx * 0.1 }}
-                  className="group relative cursor-pointer"
-                >
-                  {/* Video Thumbnail Container */}
-                  <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-xl">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.03]"
-                    />
-
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
-
-                    {/* Center Play Button */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                      <div className="w-12 h-12 rounded-full bg-black/80 border border-[#CCFF00]/40 flex items-center justify-center text-[#CCFF00] group-hover:bg-[#CCFF00] group-hover:text-black group-hover:scale-110 transition-all duration-300">
-                        <Play className="w-4 h-4 fill-current translate-x-0.5" />
-                      </div>
-                    </div>
-
-                    {/* Views Count Only */}
-                    <div className="absolute bottom-3.5 left-3.5 z-10">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-[#CCFF00] text-[10px] sm:text-xs font-body font-bold text-black uppercase tracking-wider shadow-lg">
-                        <Eye className="w-3.5 h-3.5 stroke-[2.5]" />
-                        {item.views}
-                      </span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <h3 className="font-heading text-3xl sm:text-5xl lg:text-6xl text-white uppercase tracking-tight leading-none">
+                REAL ESTATE <span className="text-[#CCFF00]">VIDEOS</span>
+              </h3>
+              <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-sm">
+                A selection of our real estate video work.
+              </p>
             </div>
           </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+            {REAL_ESTATE_DATA.map((item, idx) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: idx * 0.1 }}
+                className="group relative cursor-pointer"
+              >
+                {/* Vertical 9:16 Video Thumbnail Container */}
+                <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-2xl">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.04]"
+                  />
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
+
+                  {/* Center Play Button */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                    <div className="w-12 h-12 rounded-full bg-black/80 border border-[#CCFF00]/40 flex items-center justify-center text-[#CCFF00] group-hover:bg-[#CCFF00] group-hover:text-black group-hover:scale-110 transition-all duration-300">
+                      <Play className="w-4 h-4 fill-current translate-x-0.5" />
+                    </div>
+                  </div>
+
+                  {/* Views Count Only */}
+                  <div className="absolute bottom-3.5 left-3.5 z-10">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-[#CCFF00] text-[10px] sm:text-xs font-body font-bold text-black uppercase tracking-wider shadow-lg">
+                      <Eye className="w-3.5 h-3.5 stroke-[2.5]" />
+                      {item.views}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

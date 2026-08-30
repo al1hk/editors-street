@@ -42,8 +42,6 @@ export default function Footer() {
 
   const SOCIAL_LINKS = [
     { name: "Instagram", href: "https://instagram.com", icon: InstagramIcon },
-    { name: "YouTube", href: "https://youtube.com", icon: YoutubeIcon },
-    { name: "LinkedIn", href: "https://linkedin.com", icon: LinkedinIcon },
   ];
 
   return (
@@ -55,11 +53,13 @@ export default function Footer() {
           
           {/* Brand Column (6 Cols) */}
           <div className="md:col-span-6 space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#CCFF00]" />
-              <span className="font-heading text-2xl sm:text-3xl tracking-wide text-white uppercase">
-                Editors Street
-              </span>
+            <div className="flex items-center">
+              <img
+                src="/assets/image03.gif"
+                alt="Editors Street Logo"
+                className="h-12 sm:h-14 w-auto object-contain select-none pointer-events-none"
+                draggable={false}
+              />
             </div>
 
             <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-md leading-relaxed">
@@ -136,18 +136,9 @@ export default function Footer() {
 
         </div>
 
-        {/* Large Architectural Watermark */}
-        <div className="pt-8 border-t border-white/[0.06] flex flex-col items-center">
-          <div className="w-full text-center overflow-hidden py-2">
-            <span className="font-heading text-4xl sm:text-7xl md:text-8xl lg:text-[7rem] tracking-tight uppercase text-white/[0.04] block select-none pointer-events-none leading-none">
-              EDITORS STREET
-            </span>
-          </div>
-
-          {/* Bottom Copyright Bar */}
-          <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-[11px] font-body text-zinc-500">
-            <p>© 2026 Editors Street. All rights reserved.</p>
-          </div>
+        {/* Bottom Copyright Bar */}
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-[11px] font-body text-zinc-500">
+          <p>© 2026 Editors Street. All rights reserved.</p>
         </div>
 
       </div>

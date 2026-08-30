@@ -75,19 +75,6 @@ export default function AboutSection() {
 
         </div>
 
-        {/* "LEARN MORE ABOUT US" Glitch Button — pill shape + solid accent fallback, matching reference's CTA */}
-        <div className="pt-2">
-          <a
-            href="#contact"
-            className="glitch-btn-master group px-10 sm:px-14 py-4 sm:py-4.5 rounded-full font-mono text-xs sm:text-sm font-bold tracking-[0.22em] uppercase flex items-center gap-3 transition-all duration-300 w-fit bg-[#CCFF00] hover:bg-[#E5FF33] text-black hover:scale-[1.02]"
-          >
-            <span className="btn-glitch-text" data-text="LEARN MORE ABOUT US">
-              LEARN MORE ABOUT US
-            </span>
-            <ArrowRight className="w-4 h-4 text-black stroke-[3] transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
-        </div>
-
       </div>
     </section>
   );

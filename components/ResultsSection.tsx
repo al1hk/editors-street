@@ -10,20 +10,16 @@ interface ResultStat {
 
 const RESULTS_DATA: ResultStat[] = [
   {
-    value: "100+",
-    label: "Clients",
-  },
-  {
-    value: "1M+",
-    label: "Views",
-  },
-  {
     value: "10+",
     label: "Years Experience",
   },
   {
-    value: "X,XXX+",
-    label: "Videos Created",
+    value: "100+",
+    label: "Clients Served",
+  },
+  {
+    value: "50M+",
+    label: "Views Generated",
   },
 ];
 
@@ -55,9 +51,9 @@ export default function ResultsSection() {
         </div>
 
         {/* 
-          CARDLESS FUTURISTIC METRIC TELEMETRY GRID (4 COLUMNS, PURE TYPOGRAPHY & LASER DIVIDERS)
+          CARDLESS FUTURISTIC METRIC TELEMETRY GRID (3 COLUMNS, PURE TYPOGRAPHY & LASER DIVIDERS)
         */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-12 pt-4">
           {RESULTS_DATA.map((item, idx) => (
             <motion.div
               key={item.label}
