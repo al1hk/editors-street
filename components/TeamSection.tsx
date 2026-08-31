@@ -29,10 +29,10 @@ const TEAM: TeamMember[] = [
   },
   {
     num: "03",
-    name: "Editors Street",
-    role: "Post Production",
-    image: "/assets/original-5b5da76b0b82c5d24ded9c30b9979fc1.webp",
-    bio: "Dedicated creative talent delivering world-class motion graphics, sound design, and viral social content.",
+    name: "Farzan",
+    role: "Video Editor",
+    image: "/assets/farzan.jpeg",
+    bio: "Farzan focuses on creating clean, engaging edits that bring our clients' content to life across social media platforms.",
   },
 ];
 

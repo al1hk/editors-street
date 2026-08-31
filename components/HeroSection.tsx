@@ -1,128 +1,84 @@
 "use client";
 
-import React from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 
-const ROW_1_TILES = [
-  { img: "/assets/hero/clip1.jpg", title: "Cyber Drift // 8K", tag: "COMMERCIAL" },
-  { img: "/assets/hero/clip2.jpg", title: "Eclipse Music Video", tag: "MUSIC VIDEO" },
-  { img: "/assets/hero/clip3.jpg", title: "Vhronos Fashion Cut", tag: "FASHION" },
-  { img: "/assets/hero/clip4.jpg", title: "Neon Chronicles Suite", tag: "COLOR GRADE" },
-  { img: "/assets/hero/clip1.jpg", title: "Cyber Drift // 8K", tag: "COMMERCIAL" },
-  { img: "/assets/hero/clip2.jpg", title: "Eclipse Music Video", tag: "MUSIC VIDEO" },
-  { img: "/assets/hero/clip3.jpg", title: "Vhronos Fashion Cut", tag: "FASHION" },
-  { img: "/assets/hero/clip4.jpg", title: "Neon Chronicles Suite", tag: "COLOR GRADE" },
-];
-
-const ROW_2_TILES = [
-  { img: "/assets/hero/clip3.jpg", title: "Vhronos Fashion Cut", tag: "BRAND FILM" },
-  { img: "/assets/hero/clip4.jpg", title: "Neon Chronicles Suite", tag: "COLOR SUITE" },
-  { img: "/assets/hero/clip1.jpg", title: "Cyber Drift // 8K", tag: "SPEED RAMP" },
-  { img: "/assets/hero/clip2.jpg", title: "Eclipse Music Video", tag: "VFX MOTION" },
-  { img: "/assets/hero/clip3.jpg", title: "Vhronos Fashion Cut", tag: "BRAND FILM" },
-  { img: "/assets/hero/clip4.jpg", title: "Neon Chronicles Suite", tag: "COLOR SUITE" },
-  { img: "/assets/hero/clip1.jpg", title: "Cyber Drift // 8K", tag: "SPEED RAMP" },
-  { img: "/assets/hero/clip2.jpg", title: "Eclipse Music Video", tag: "VFX MOTION" },
-];
-
-const ROW_3_TILES = [
-  { img: "/assets/hero/clip2.jpg", title: "Eclipse Music Video", tag: "REEL MASTER" },
-  { img: "/assets/hero/clip1.jpg", title: "Cyber Drift // 8K", tag: "RAW TIMELINE" },
-  { img: "/assets/hero/clip4.jpg", title: "Neon Chronicles Suite", tag: "DOLBY MIX" },
-  { img: "/assets/hero/clip3.jpg", title: "Vhronos Fashion Cut", tag: "SHORTS MASTER" },
-  { img: "/assets/hero/clip2.jpg", title: "Eclipse Music Video", tag: "REEL MASTER" },
-  { img: "/assets/hero/clip1.jpg", title: "Cyber Drift // 8K", tag: "RAW TIMELINE" },
-  { img: "/assets/hero/clip4.jpg", title: "Neon Chronicles Suite", tag: "DOLBY MIX" },
-  { img: "/assets/hero/clip3.jpg", title: "Vhronos Fashion Cut", tag: "SHORTS MASTER" },
+const HERO_VIDEOS = [
+  "/assets/hero/3 Mixed Doubles Mistakes Most Players Make Web.mp4",
+  "/assets/hero/Red PAddle.mp4",
+  "/assets/realestate/Aislinn Phelan v.3.mp4",
+  "/assets/realestate/Chantal v.1.mp4",
+  "/assets/realestate/Natalie v.2.mp4",
 ];
 
 export default function HeroSection() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState<number | null>(null);
+  const [isFading, setIsFading] = useState(false);
+  const currentVideoRef = useRef<HTMLVideoElement>(null);
+  const nextVideoRef = useRef<HTMLVideoElement>(null);
+
+  const advanceVideo = useCallback(() => {
+    const next = (currentIndex + 1) % HERO_VIDEOS.length;
+    setNextIndex(next);
+    setIsFading(true);
+  }, [currentIndex]);
+
+  // When fade completes, swap videos
+  useEffect(() => {
+    if (!isFading) return;
+    const timer = setTimeout(() => {
+      setCurrentIndex(nextIndex!);
+      setNextIndex(null);
+      setIsFading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [isFading, nextIndex]);
+
+  // Auto-play the next video element when nextIndex changes
+  useEffect(() => {
+    if (nextIndex !== null && nextVideoRef.current) {
+      nextVideoRef.current.play().catch(() => {});
+    }
+  }, [nextIndex]);
+
   return (
     <section
       id="home"
       className="relative min-h-[85vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden bg-black py-16 sm:py-24 select-none"
     >
-      {/* Background Animated Video Mosaic Grid */}
-      <div className="absolute inset-0 flex flex-col justify-center gap-3 sm:gap-4 pointer-events-none opacity-60 scale-105">
-        {/* Row 1: Left scrolling */}
-        <div className="flex gap-4 w-[200%] animate-marquee overflow-hidden" style={{ willChange: 'transform', contain: 'layout' }}>
-          {ROW_1_TILES.map((clip, i) => (
-            <div
-              key={`r1-${i}`}
-              className="relative w-64 sm:w-80 md:w-96 aspect-video overflow-hidden shrink-0 border border-[#CCFF00]/20 bg-zinc-900"
-            >
-              <img
-                src={clip.img}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-3 left-3">
-                <span className="text-[9px] font-mono font-bold px-2 py-0.5 bg-black/90 text-[#CCFF00] border border-[#CCFF00]/40 tracking-wider">
-                  {clip.tag}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Background Fullscreen Video Layer */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Current Video */}
+        <video
+          ref={currentVideoRef}
+          key={`current-${currentIndex}`}
+          src={HERO_VIDEOS[currentIndex]}
+          autoPlay
+          muted
+          playsInline
+          onEnded={advanceVideo}
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+          style={{ opacity: isFading ? 0 : 0.8 }}
+        />
 
-        {/* Row 2: Right scrolling */}
-        <div
-          className="flex gap-4 w-[200%] overflow-hidden"
-          style={{ animation: 'marquee 32s linear infinite reverse', willChange: 'transform', contain: 'layout' }}
-        >
-          {ROW_2_TILES.map((clip, i) => (
-            <div
-              key={`r2-${i}`}
-              className="relative w-64 sm:w-80 md:w-96 aspect-video overflow-hidden shrink-0 border border-[#CCFF00]/20 bg-zinc-900"
-            >
-              <img
-                src={clip.img}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-3 left-3">
-                <span className="text-[9px] font-mono font-bold px-2 py-0.5 bg-black/90 text-[#CCFF00] border border-[#CCFF00]/40 tracking-wider">
-                  {clip.tag}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Row 3: Left scrolling */}
-        <div
-          className="hidden sm:flex gap-4 w-[200%] overflow-hidden"
-          style={{ animation: 'marquee 38s linear infinite', willChange: 'transform', contain: 'layout' }}
-        >
-          {ROW_3_TILES.map((clip, i) => (
-            <div
-              key={`r3-${i}`}
-              className="relative w-64 sm:w-80 md:w-96 aspect-video overflow-hidden shrink-0 border border-[#CCFF00]/20 bg-zinc-900"
-            >
-              <img
-                src={clip.img}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-3 left-3">
-                <span className="text-[9px] font-mono font-bold px-2 py-0.5 bg-black/90 text-[#CCFF00] border border-[#CCFF00]/40 tracking-wider">
-                  {clip.tag}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Next Video (crossfades in) */}
+        {nextIndex !== null && (
+          <video
+            ref={nextVideoRef}
+            key={`next-${nextIndex}`}
+            src={HERO_VIDEOS[nextIndex]}
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+            style={{ opacity: isFading ? 0.8 : 0 }}
+          />
+        )}
       </div>
 
-      {/* Cinematic overlay — flatter than before so the collage stays visible like the reference */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/60 pointer-events-none" />
-      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-72 bg-black/60 pointer-events-none" />
+      {/* Cinematic overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30 pointer-events-none" />
+      <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-72 bg-black/30 pointer-events-none" />
 
       {/* Central Foreground Hero Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center space-y-5 sm:space-y-6">

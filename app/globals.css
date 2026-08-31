@@ -37,11 +37,19 @@
   font-family: var(--font-body), 'Space Mono', 'Courier New', monospace;
 }
 
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   background-color: #000000;
   color: var(--text-primary);
   font-family: var(--font-body), 'Space Mono', 'Courier New', monospace;
   overflow-x: hidden;
+  touch-action: pan-y;
 }
 
 /* =========================================

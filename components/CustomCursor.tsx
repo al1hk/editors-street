@@ -40,9 +40,18 @@ export default function CustomCursor() {
     handleResize();
     window.addEventListener("resize", handleResize);
 
+    let isMoving = false;
+    let idleTimeout: NodeJS.Timeout | null = null;
+
     const onMouseMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
+      isMoving = true;
+
+      if (idleTimeout) clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(() => {
+        isMoving = false;
+      }, 100);
 
       if (!isVisible.current) {
         isVisible.current = true;
@@ -52,10 +61,12 @@ export default function CustomCursor() {
         ringPos.current.y = e.clientY;
       }
 
-      // Add to trail
-      trail.current.push({ x: e.clientX, y: e.clientY, age: 1.0 });
+      // Add to trail with throttled density for max performance
+      if (trail.current.length === 0 || Math.hypot(e.clientX - trail.current[trail.current.length - 1].x, e.clientY - trail.current[trail.current.length - 1].y) > 6) {
+        trail.current.push({ x: e.clientX, y: e.clientY, age: 1.0 });
+      }
 
-      // Fast precise snap for the center dot
+      // Instant hardware accelerated transform
       dot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) scale(${
         isMouseDown.current ? 0.7 : isHovered.current ? 1.5 : 1
       })`;
@@ -104,74 +115,80 @@ export default function CustomCursor() {
         if (ring) {
           if (hovered) {
             ring.style.borderColor = "#CCFF00";
-            ring.style.backgroundColor = "transparent";
             ring.style.boxShadow = "0 0 15px rgba(204, 255, 0, 0.4)";
           } else {
             ring.style.borderColor = "rgba(204, 255, 0, 0.45)";
-            ring.style.backgroundColor = "transparent";
             ring.style.boxShadow = "none";
           }
         }
       }
     };
 
-    // Smooth animation loop: draw glowing trailing line + update ring lerp
+    // Ultra-optimized RAF loop
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (trail.current.length > 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw Glowing Trail Line
-      if (trail.current.length > 1) {
-        for (let i = 0; i < trail.current.length - 1; i++) {
-          const p1 = trail.current[i];
-          const p2 = trail.current[i + 1];
+        if (trail.current.length > 1) {
+          for (let i = 0; i < trail.current.length - 1; i++) {
+            const p1 = trail.current[i];
+            const p2 = trail.current[i + 1];
 
-          ctx.beginPath();
-          ctx.moveTo(p1.x, p1.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = `rgba(204, 255, 0, ${p1.age * 0.65})`;
-          ctx.lineWidth = Math.max(1, p1.age * 3.5);
-          ctx.lineCap = "round";
-          ctx.lineJoin = "round";
-          ctx.shadowColor = "#CCFF00";
-          ctx.shadowBlur = p1.age * 12;
-          ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(204, 255, 0, ${p1.age * 0.65})`;
+            ctx.lineWidth = Math.max(1, p1.age * 3);
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+            ctx.stroke();
+          }
         }
+
+        // Age points
+        for (let i = 0; i < trail.current.length; i++) {
+          trail.current[i].age -= 0.055;
+        }
+        trail.current = trail.current.filter((p) => p.age > 0);
+      } else if (!isMoving) {
+        // Clear once when idle
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
 
-      // Age points and remove dead ones
-      for (let i = 0; i < trail.current.length; i++) {
-        trail.current[i].age -= 0.045; // Decay rate
+      // Smooth lerp for outer ring
+      const ease = isHovered.current ? 0.28 : 0.22;
+      const dx = mouse.current.x - ringPos.current.x;
+      const dy = mouse.current.y - ringPos.current.y;
+      
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        ringPos.current.x += dx * ease;
+        ringPos.current.y += dy * ease;
+
+        const scale = isMouseDown.current
+          ? isHovered.current
+            ? 1.5
+            : 0.8
+          : isHovered.current
+          ? 2.0
+          : 1;
+
+        ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) scale(${scale})`;
       }
-      trail.current = trail.current.filter((p) => p.age > 0);
-
-      // Lerp ring position smoothly
-      const ease = isHovered.current ? 0.24 : 0.18;
-      ringPos.current.x += (mouse.current.x - ringPos.current.x) * ease;
-      ringPos.current.y += (mouse.current.y - ringPos.current.y) * ease;
-
-      const scale = isMouseDown.current
-        ? isHovered.current
-          ? 1.5
-          : 0.8
-        : isHovered.current
-        ? 2.0
-        : 1;
-
-      ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) scale(${scale})`;
 
       rafId.current = requestAnimationFrame(animate);
     };
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
-    window.addEventListener("mousedown", onMouseDown);
-    window.addEventListener("mouseup", onMouseUp);
-    document.addEventListener("mouseleave", onMouseLeave);
-    document.addEventListener("mouseenter", onMouseEnter);
+    window.addEventListener("mousedown", onMouseDown, { passive: true });
+    window.addEventListener("mouseup", onMouseUp, { passive: true });
+    document.addEventListener("mouseleave", onMouseLeave, { passive: true });
+    document.addEventListener("mouseenter", onMouseEnter, { passive: true });
     window.addEventListener("mouseover", onMouseOver, { passive: true });
 
     rafId.current = requestAnimationFrame(animate);
 
     return () => {
+      if (idleTimeout) clearTimeout(idleTimeout);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);

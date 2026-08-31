@@ -41,7 +41,7 @@ export default function Footer() {
   ];
 
   const SOCIAL_LINKS = [
-    { name: "Instagram", href: "https://instagram.com", icon: InstagramIcon },
+    { name: "Instagram", href: "https://www.instagram.com/editors_street/", icon: InstagramIcon },
   ];
 
   return (
