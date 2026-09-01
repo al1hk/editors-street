@@ -118,15 +118,20 @@ export default function ContactSection() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3.5 p-3 rounded-xl bg-black border border-white/[0.06]">
-                <div className="w-8 h-8 rounded-lg bg-[#CCFF00]/10 flex items-center justify-center text-[#CCFF00] shrink-0">
+              <a
+                href="https://wa.me/12393732623"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3.5 p-3 rounded-xl bg-black border border-white/[0.06] hover:border-[#CCFF00]/40 transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-lg bg-[#CCFF00]/10 group-hover:bg-[#CCFF00] group-hover:text-black flex items-center justify-center text-[#CCFF00] shrink-0 transition-colors">
                   <MessageSquare className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[10px] font-body font-bold text-zinc-500 uppercase tracking-wider">WhatsApp</div>
-                  <div className="text-xs font-body text-zinc-200 truncate">Direct Client Desk</div>
+                  <div className="text-[10px] font-body font-bold text-zinc-500 uppercase tracking-wider group-hover:text-[#CCFF00] transition-colors">WhatsApp</div>
+                  <div className="text-xs font-body text-zinc-200 truncate">+1 (239) 373-2623</div>
                 </div>
-              </div>
+              </a>
             </div>
 
           </div>

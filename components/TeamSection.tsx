@@ -4,7 +4,6 @@ import React from "react";
 import { motion } from "framer-motion";
 
 interface TeamMember {
-  num: string;
   name: string;
   role: string;
   image?: string;
@@ -14,21 +13,18 @@ interface TeamMember {
 
 const TEAM: TeamMember[] = [
   {
-    num: "01",
     name: "Musab",
     role: "Video Editor",
     image: "/assets/musab.jpeg",
     bio: "Musab specializes in short-form video editing, social media content, and creative visual storytelling.",
   },
   {
-    num: "02",
     name: "Muhammad Hunain",
     role: "Creative Director",
     image: "/assets/hunain.png",
     bio: "I lead the creative team at Editors Street and work with our team to create high-quality content for creators, businesses, and brands.",
   },
   {
-    num: "03",
     name: "Farzan",
     role: "Video Editor",
     image: "/assets/farzan.jpeg",
@@ -71,7 +67,7 @@ export default function TeamSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           {TEAM.map((member, idx) => (
             <motion.div
-              key={member.num}
+              key={member.name}
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
@@ -80,13 +76,6 @@ export default function TeamSection() {
             >
               {/* Photo Area */}
               <div className="relative w-full aspect-[4/5] bg-zinc-900 overflow-hidden">
-                {/* Number badge — top left */}
-                <div className="absolute top-4 left-4 z-20">
-                  <span className="text-xs font-body font-bold tracking-wider text-[#CCFF00] bg-black/80 px-2.5 py-1 rounded border border-white/10 backdrop-blur-sm">
-                    [{member.num}]
-                  </span>
-                </div>
-
                 {member.image ? (
                   <img
                     src={member.image}

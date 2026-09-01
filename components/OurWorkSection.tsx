@@ -43,21 +43,21 @@ const REAL_ESTATE_DATA: VideoItem[] = [
     id: "re-1",
     title: "Real Estate 01",
     image: "/assets/hero/clip2.jpg",
-    video: "/assets/realestate/Aislinn Phelan v.3.mp4",
+    video: "/assets/compressed/Aislinn Phelan v.3.mp4",
     metrics: "",
   },
   {
     id: "re-2",
     title: "Real Estate 02",
     image: "/assets/hero/clip3.jpg",
-    video: "/assets/realestate/Chantal v.1.mp4",
+    video: "/assets/compressed/Chantal v.1.mp4",
     metrics: "",
   },
   {
     id: "re-3",
     title: "Real Estate 03",
     image: "/assets/hero/clip4.jpg",
-    video: "/assets/realestate/Natalie v.2.mp4",
+    video: "/assets/compressed/Natalie v.2.mp4",
     metrics: "",
   },
 ];
@@ -110,34 +110,13 @@ export default function OurWorkSection() {
             <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-tight leading-none text-white">
               OUR <span className="text-[#CCFF00]">WORK</span>
             </h2>
-
-            <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-md leading-relaxed">
-              Engineered for maximum viewer retention, viral growth, and cinematic polish.
-            </p>
           </div>
 
           {/* ============================
               LONG FORM — WIDESCREEN
              ============================ */}
           <div className="space-y-8">
-            <div className="space-y-3 border-b border-white/[0.08] pb-6">
-                <div className="flex items-center gap-3">
-                  <span className="w-6 h-[2px] bg-[#CCFF00]" />
-                  <span className="font-body text-[10px] font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
-                    NARRATIVE &amp; TALKING HEAD
-                  </span>
-                </div>
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                  <h3 className="font-heading text-3xl sm:text-5xl lg:text-6xl text-white uppercase tracking-tight leading-none">
-                    LONG FORM &amp; <span className="text-[#CCFF00]">DOCUMENTARIES</span>
-                  </h3>
-                  <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-sm">
-                    Full-length cinematic cuts, podcasts, and narrative storytelling.
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 {LONG_FORM_DATA.map((item, idx) => (
                   <motion.div
                     key={item.id}
@@ -229,13 +208,6 @@ export default function OurWorkSection() {
                       <div className="w-14 h-14 rounded-full bg-black/80 border-2 border-[#CCFF00]/40 flex items-center justify-center text-[#CCFF00] group-hover:bg-[#CCFF00] group-hover:text-black group-hover:scale-110 transition-all duration-300">
                         <Play className="w-5 h-5 fill-current translate-x-0.5" />
                       </div>
-                    </div>
-
-                    {/* Title badge */}
-                    <div className="absolute bottom-4 left-4 right-4 z-10">
-                      <span className="text-xs font-body font-bold tracking-wider text-white uppercase">
-                        {item.title}
-                      </span>
                     </div>
                   </div>
                 </motion.div>
