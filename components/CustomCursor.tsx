@@ -30,7 +30,7 @@ export default function CustomCursor() {
     const ring = ringRef.current;
     if (!canvas || !dot || !ring) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     const handleResize = () => {
@@ -40,18 +40,9 @@ export default function CustomCursor() {
     handleResize();
     window.addEventListener("resize", handleResize);
 
-    let isMoving = false;
-    let idleTimeout: NodeJS.Timeout | null = null;
-
     const onMouseMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
-      isMoving = true;
-
-      if (idleTimeout) clearTimeout(idleTimeout);
-      idleTimeout = setTimeout(() => {
-        isMoving = false;
-      }, 100);
 
       if (!isVisible.current) {
         isVisible.current = true;
@@ -61,12 +52,16 @@ export default function CustomCursor() {
         ringPos.current.y = e.clientY;
       }
 
-      // Add to trail with throttled density for max performance
-      if (trail.current.length === 0 || Math.hypot(e.clientX - trail.current[trail.current.length - 1].x, e.clientY - trail.current[trail.current.length - 1].y) > 6) {
+      // Add trail point with distance threshold for smooth ribbon
+      const lastPoint = trail.current[trail.current.length - 1];
+      if (!lastPoint || Math.hypot(e.clientX - lastPoint.x, e.clientY - lastPoint.y) > 5) {
         trail.current.push({ x: e.clientX, y: e.clientY, age: 1.0 });
+        if (trail.current.length > 20) {
+          trail.current.shift();
+        }
       }
 
-      // Instant hardware accelerated transform
+      // Instant hardware dot positioning
       dot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) scale(${
         isMouseDown.current ? 0.7 : isHovered.current ? 1.5 : 1
       })`;
@@ -74,26 +69,18 @@ export default function CustomCursor() {
 
     const onMouseDown = () => {
       isMouseDown.current = true;
-      if (ring) {
-        ring.style.transform = `translate3d(${ringPos.current.x}px, ${
-          ringPos.current.y
-        }px, 0) scale(${isHovered.current ? 1.5 : 0.8})`;
-      }
     };
 
     const onMouseUp = () => {
       isMouseDown.current = false;
-      if (ring) {
-        ring.style.transform = `translate3d(${ringPos.current.x}px, ${
-          ringPos.current.y
-        }px, 0) scale(${isHovered.current ? 2.0 : 1})`;
-      }
     };
 
     const onMouseLeave = () => {
       isVisible.current = false;
       dot.style.opacity = "0";
       ring.style.opacity = "0";
+      trail.current = [];
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
 
     const onMouseEnter = () => {
@@ -115,17 +102,18 @@ export default function CustomCursor() {
         if (ring) {
           if (hovered) {
             ring.style.borderColor = "#CCFF00";
-            ring.style.boxShadow = "0 0 15px rgba(204, 255, 0, 0.4)";
+            ring.style.boxShadow = "0 0 15px rgba(204, 255, 0, 0.45)";
           } else {
-            ring.style.borderColor = "rgba(204, 255, 0, 0.45)";
+            ring.style.borderColor = "rgba(204, 255, 0, 0.4)";
             ring.style.boxShadow = "none";
           }
         }
       }
     };
 
-    // Ultra-optimized RAF loop
+    // Smooth RAF render loop
     const animate = () => {
+      // 1. Render Neon Trail
       if (trail.current.length > 0) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -137,7 +125,7 @@ export default function CustomCursor() {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(204, 255, 0, ${p1.age * 0.65})`;
+            ctx.strokeStyle = `rgba(204, 255, 0, ${p1.age * 0.7})`;
             ctx.lineWidth = Math.max(1, p1.age * 3);
             ctx.lineCap = "round";
             ctx.lineJoin = "round";
@@ -145,35 +133,32 @@ export default function CustomCursor() {
           }
         }
 
-        // Age points
+        // Age out trail points
         for (let i = 0; i < trail.current.length; i++) {
-          trail.current[i].age -= 0.055;
+          trail.current[i].age -= 0.05;
         }
         trail.current = trail.current.filter((p) => p.age > 0);
-      } else if (!isMoving) {
-        // Clear once when idle
+      } else {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
 
-      // Smooth lerp for outer ring
-      const ease = isHovered.current ? 0.28 : 0.22;
+      // 2. Smooth Lerp for Outer Halo Ring
+      const ease = isHovered.current ? 0.28 : 0.2;
       const dx = mouse.current.x - ringPos.current.x;
       const dy = mouse.current.y - ringPos.current.y;
-      
-      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-        ringPos.current.x += dx * ease;
-        ringPos.current.y += dy * ease;
 
-        const scale = isMouseDown.current
-          ? isHovered.current
-            ? 1.5
-            : 0.8
-          : isHovered.current
-          ? 2.0
-          : 1;
+      ringPos.current.x += dx * ease;
+      ringPos.current.y += dy * ease;
 
-        ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) scale(${scale})`;
-      }
+      const scale = isMouseDown.current
+        ? isHovered.current
+          ? 1.4
+          : 0.8
+        : isHovered.current
+        ? 1.8
+        : 1.0;
+
+      ring.style.transform = `translate3d(${ringPos.current.x}px, ${ringPos.current.y}px, 0) scale(${scale})`;
 
       rafId.current = requestAnimationFrame(animate);
     };
@@ -188,7 +173,6 @@ export default function CustomCursor() {
     rafId.current = requestAnimationFrame(animate);
 
     return () => {
-      if (idleTimeout) clearTimeout(idleTimeout);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
@@ -202,20 +186,20 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* High-performance glowing trail canvas */}
+      {/* Glowing Neon Trail Canvas */}
       <canvas
         ref={canvasRef}
         className="pointer-events-none fixed inset-0 z-[999990] select-none hidden md:block"
       />
 
-      {/* Smooth Trailing Halo Ring (no blur backdrop) */}
+      {/* Smooth Trailing Halo Ring */}
       <div
         ref={ringRef}
-        className="pointer-events-none fixed top-0 left-0 -ml-5 -mt-5 w-10 h-10 rounded-full border border-[#CCFF00]/45 z-[999995] opacity-0 select-none hidden md:block"
+        className="pointer-events-none fixed top-0 left-0 -ml-5 -mt-5 w-10 h-10 rounded-full border border-[#CCFF00]/40 z-[999995] opacity-0 select-none hidden md:block"
         style={{
           willChange: "transform",
           transform: "translate3d(-200px, -200px, 0)",
-          transition: "border-color 0.2s ease, box-shadow 0.2s ease",
+          transition: "border-color 0.15s ease, box-shadow 0.15s ease",
         }}
       />
 
@@ -226,7 +210,6 @@ export default function CustomCursor() {
         style={{
           willChange: "transform",
           transform: "translate3d(-200px, -200px, 0)",
-          transition: "transform 0.1s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       />
     </>

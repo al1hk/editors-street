@@ -40,13 +40,8 @@ export default function ResultsSection() {
             </span>
           </div>
 
-          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-tight">
-            <span
-              className="cyber-glitch-loop text-white"
-              data-text="Our Results"
-            >
-              Our <span className="text-[#CCFF00] drop-shadow-[0_0_40px_rgba(204,255,0,0.4)]">Results</span>
-            </span>
+          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-tight text-white">
+            Our <span className="text-[#CCFF00] drop-shadow-[0_0_35px_rgba(204,255,0,0.35)]">Results</span>
           </h2>
         </div>
 
@@ -72,7 +67,7 @@ export default function ResultsSection() {
               </div>
 
               {/* Label */}
-              <p className="text-lg sm:text-xl font-bold font-['Space_Grotesk',sans-serif] text-white group-hover:text-zinc-200 transition-colors uppercase tracking-wider">
+              <p className="text-lg sm:text-xl font-bold font-heading text-white group-hover:text-zinc-200 transition-colors uppercase tracking-wider">
                 {item.label}
               </p>
 

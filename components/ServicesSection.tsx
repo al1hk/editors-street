@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { ArrowUpRight } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface ServiceItem {
   id: string;
@@ -93,8 +92,6 @@ const SERVICES_DATA: ServiceItem[] = [
 ];
 
 export default function ServicesSection() {
-  const [hoveredService, setHoveredService] = useState<string | null>(null);
-
   return (
     <section
       id="services"
@@ -103,13 +100,7 @@ export default function ServicesSection() {
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 lg:px-16 space-y-16 sm:space-y-20">
 
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="space-y-3"
-        >
+        <div className="space-y-3">
           <div className="flex items-center gap-3">
             <span className="w-8 h-[2px] bg-[#CCFF00]" />
             <span className="font-body text-[10px] font-bold tracking-[0.35em] text-[#CCFF00] uppercase">
@@ -120,7 +111,7 @@ export default function ServicesSection() {
           <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[0.01em] leading-tight text-white">
             What <span className="text-[#CCFF00]">We Do</span>
           </h2>
-        </motion.div>
+        </div>
 
         {/*
           STACKING SERVICES DECK ON PURE BLACK BACKGROUND:
@@ -132,17 +123,12 @@ export default function ServicesSection() {
             const topOffset = 100 + index * 20;
 
             return (
-              <motion.a
+              <a
                 key={service.id}
                 href={buildWhatsAppUrl(service.whatsappMessage)}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
-                onMouseEnter={() => setHoveredService(service.id)}
-                onMouseLeave={() => setHoveredService(null)}
+                aria-label={`Inquire about ${service.title} on WhatsApp`}
                 style={{
                   top: `${topOffset}px`,
                   zIndex: index + 10,
@@ -178,7 +164,7 @@ export default function ServicesSection() {
                   </div>
 
                 </div>
-              </motion.a>
+              </a>
             );
           })}
         </div>

@@ -112,9 +112,7 @@ const jsonLd = {
   },
   priceRange: "$$$$",
   sameAs: [
-    "https://instagram.com",
-    "https://youtube.com",
-    "https://linkedin.com",
+    "https://www.instagram.com/editors_street/",
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",

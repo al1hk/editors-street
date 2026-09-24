@@ -13,7 +13,6 @@ const NAV_ITEMS: NavItem[] = [
   { name: "About Us", href: "#about-us" },
   { name: "Services", href: "#services" },
   { name: "Our Work", href: "#our-work" },
-  { name: "Our Team", href: "#our-team" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -42,7 +41,11 @@ export default function Navbar() {
         {/* Logo Section */}
         <div className="relative flex items-center justify-between md:justify-center pt-4 sm:pt-5 pb-2 sm:pb-3 bg-[#000000]">
           {/* Logo with 100% solid pitch black background matching GIF */}
-          <div className="flex items-center justify-center select-none pointer-events-none bg-[#000000]">
+          <a
+            href="#home"
+            aria-label="Editors Street Home"
+            className="flex items-center justify-center select-none bg-[#000000] focus:outline-none"
+          >
             <div className="relative bg-[#000000]">
               <img
                 src="/assets/image03.gif"
@@ -51,7 +54,7 @@ export default function Navbar() {
                 draggable={false}
               />
             </div>
-          </div>
+          </a>
 
           {/* Mobile Menu Toggle */}
           <div className="md:hidden absolute right-0 top-1/2 -translate-y-1/2">
@@ -135,7 +138,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[calc(4.5rem+1px)] bottom-0 bg-black border-t border-white/10 z-50 flex flex-col justify-between p-6 animate-in slide-in-from-top duration-300">
+        <div className="md:hidden fixed inset-x-0 top-full h-[calc(100dvh-100%)] bg-black/95 backdrop-blur-2xl border-t border-white/10 z-50 flex flex-col justify-between p-6 overflow-y-auto">
 
           <ul className="space-y-1 mt-2">
             {NAV_ITEMS.map((item) => {

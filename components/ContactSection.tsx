@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import { Send, PhoneCall, Calendar, Mail, MessageSquare, CheckCircle, ArrowUpRight } from "lucide-react";
 
 const HELP_OPTIONS = [
@@ -17,7 +16,6 @@ const HELP_OPTIONS = [
 type FormState = "idle" | "submitting" | "success" | "error";
 
 export default function ContactSection() {
-  const [focused, setFocused] = useState<string | null>(null);
   const [formState, setFormState] = useState<FormState>("idle");
   const [form, setForm] = useState({
     name: "",
@@ -37,8 +35,21 @@ export default function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormState("submitting");
-    await new Promise((r) => setTimeout(r, 1200));
-    setFormState("success");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setFormState("success");
+      } else {
+        setFormState("error");
+      }
+    } catch {
+      setFormState("error");
+    }
   };
 
   return (
@@ -108,15 +119,18 @@ export default function ContactSection() {
 
             {/* Direct Channels Bar */}
             <div className="p-5 rounded-2xl bg-[#0a0a0a] border border-white/[0.08] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-              <div className="flex items-center gap-3.5 p-3 rounded-xl bg-black border border-white/[0.06]">
-                <div className="w-8 h-8 rounded-lg bg-[#CCFF00]/10 flex items-center justify-center text-[#CCFF00] shrink-0">
+              <a
+                href="mailto:editorsstreet@gmail.com"
+                className="flex items-center gap-3.5 p-3 rounded-xl bg-black border border-white/[0.06] hover:border-[#CCFF00]/40 transition-colors group"
+              >
+                <div className="w-8 h-8 rounded-lg bg-[#CCFF00]/10 group-hover:bg-[#CCFF00] group-hover:text-black flex items-center justify-center text-[#CCFF00] shrink-0 transition-colors">
                   <Mail className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[10px] font-body font-bold text-zinc-500 uppercase tracking-wider">Email Us</div>
-                  <div className="text-xs font-body text-zinc-200 truncate">hello@editorsstreet.com</div>
+                  <div className="text-[10px] font-body font-bold text-zinc-500 uppercase tracking-wider group-hover:text-[#CCFF00] transition-colors">Email Us</div>
+                  <div className="text-xs font-body text-zinc-200 truncate">editorsstreet@gmail.com</div>
                 </div>
-              </div>
+              </a>
 
               <a
                 href="https://wa.me/12393732623"
@@ -158,30 +172,41 @@ export default function ContactSection() {
                     Send Another Inquiry
                   </button>
                 </div>
+              ) : formState === "error" ? (
+                <div className="py-16 text-center space-y-6">
+                  <div className="w-14 h-14 rounded-full border-2 border-red-500/50 flex items-center justify-center mx-auto">
+                    <span className="text-red-400 text-2xl font-bold">!</span>
+                  </div>
+                  <h3 className="font-heading text-3xl sm:text-4xl text-white uppercase">
+                    Something Went Wrong
+                  </h3>
+                  <p className="font-body text-xs sm:text-sm text-zinc-400 max-w-sm mx-auto leading-relaxed">
+                    We couldn&apos;t send your message. Please try again or reach out via WhatsApp.
+                  </p>
+                  <button
+                    onClick={() => setFormState("idle")}
+                    className="font-body text-xs font-bold text-red-400 border border-red-500/30 hover:bg-red-500/10 px-6 py-3 rounded-full uppercase tracking-wider transition-all"
+                  >
+                    Try Again
+                  </button>
+                </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5" noValidate>
                   
                   {/* Name & Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <label className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
+                      <label htmlFor="contact-name" className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
                         Name *
                       </label>
-                      <div
-                        className={`relative rounded-xl bg-black border transition-all duration-200 ${
-                          focused === "name"
-                            ? "border-[#CCFF00]"
-                            : "border-white/10 hover:border-white/20"
-                        }`}
-                      >
+                      <div className="relative rounded-xl bg-black border border-white/10 hover:border-white/20 focus-within:border-[#CCFF00] transition-all duration-200">
                         <input
+                          id="contact-name"
                           type="text"
                           name="name"
                           required
                           value={form.name}
                           onChange={handleChange}
-                          onFocus={() => setFocused("name")}
-                          onBlur={() => setFocused(null)}
                           placeholder="Alex Morgan"
                           className="w-full px-4 py-3.5 bg-transparent text-white font-body text-xs sm:text-sm placeholder:text-zinc-500 outline-none cyber-input"
                         />
@@ -189,24 +214,17 @@ export default function ContactSection() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
+                      <label htmlFor="contact-email" className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
                         Email *
                       </label>
-                      <div
-                        className={`relative rounded-xl bg-black border transition-all duration-200 ${
-                          focused === "email"
-                            ? "border-[#CCFF00]"
-                            : "border-white/10 hover:border-white/20"
-                        }`}
-                      >
+                      <div className="relative rounded-xl bg-black border border-white/10 hover:border-white/20 focus-within:border-[#CCFF00] transition-all duration-200">
                         <input
+                          id="contact-email"
                           type="email"
                           name="email"
                           required
                           value={form.email}
                           onChange={handleChange}
-                          onFocus={() => setFocused("email")}
-                          onBlur={() => setFocused(null)}
                           placeholder="alex@company.com"
                           className="w-full px-4 py-3.5 bg-transparent text-white font-body text-xs sm:text-sm placeholder:text-zinc-500 outline-none cyber-input"
                         />
@@ -217,23 +235,16 @@ export default function ContactSection() {
                   {/* WhatsApp & Company */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-2">
-                      <label className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
+                      <label htmlFor="contact-whatsapp" className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
                         WhatsApp / Phone
                       </label>
-                      <div
-                        className={`relative rounded-xl bg-black border transition-all duration-200 ${
-                          focused === "whatsapp"
-                            ? "border-[#CCFF00]"
-                            : "border-white/10 hover:border-white/20"
-                        }`}
-                      >
+                      <div className="relative rounded-xl bg-black border border-white/10 hover:border-white/20 focus-within:border-[#CCFF00] transition-all duration-200">
                         <input
+                          id="contact-whatsapp"
                           type="tel"
                           name="whatsapp"
                           value={form.whatsapp}
                           onChange={handleChange}
-                          onFocus={() => setFocused("whatsapp")}
-                          onBlur={() => setFocused(null)}
                           placeholder="+1 (555) 000-0000"
                           className="w-full px-4 py-3.5 bg-transparent text-white font-body text-xs sm:text-sm placeholder:text-zinc-500 outline-none cyber-input"
                         />
@@ -241,23 +252,16 @@ export default function ContactSection() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
+                      <label htmlFor="contact-company" className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
                         Company / Channel
                       </label>
-                      <div
-                        className={`relative rounded-xl bg-black border transition-all duration-200 ${
-                          focused === "company"
-                            ? "border-[#CCFF00]"
-                            : "border-white/10 hover:border-white/20"
-                        }`}
-                      >
+                      <div className="relative rounded-xl bg-black border border-white/10 hover:border-white/20 focus-within:border-[#CCFF00] transition-all duration-200">
                         <input
+                          id="contact-company"
                           type="text"
                           name="company"
                           value={form.company}
                           onChange={handleChange}
-                          onFocus={() => setFocused("company")}
-                          onBlur={() => setFocused(null)}
                           placeholder="Brand or Channel Name"
                           className="w-full px-4 py-3.5 bg-transparent text-white font-body text-xs sm:text-sm placeholder:text-zinc-500 outline-none cyber-input"
                         />
@@ -267,23 +271,16 @@ export default function ContactSection() {
 
                   {/* Service Needed */}
                   <div className="space-y-2">
-                    <label className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
+                    <label htmlFor="contact-help" className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
                       How Can We Help? *
                     </label>
-                    <div
-                      className={`relative rounded-xl bg-black border transition-all duration-200 ${
-                        focused === "helpWith"
-                          ? "border-[#CCFF00]"
-                          : "border-white/10 hover:border-white/20"
-                      }`}
-                    >
+                    <div className="relative rounded-xl bg-black border border-white/10 hover:border-white/20 focus-within:border-[#CCFF00] transition-all duration-200">
                       <select
+                        id="contact-help"
                         name="helpWith"
                         required
                         value={form.helpWith}
                         onChange={handleChange}
-                        onFocus={() => setFocused("helpWith")}
-                        onBlur={() => setFocused(null)}
                         className="w-full px-4 py-3.5 bg-transparent text-white font-body text-xs sm:text-sm outline-none appearance-none cursor-pointer cyber-select"
                       >
                         <option value="" disabled className="bg-black text-zinc-400">
@@ -300,23 +297,16 @@ export default function ContactSection() {
 
                   {/* Message */}
                   <div className="space-y-2">
-                    <label className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
+                    <label htmlFor="contact-message" className="font-body text-xs font-bold text-zinc-300 uppercase tracking-wider">
                       Project Details
                     </label>
-                    <div
-                      className={`relative rounded-xl bg-black border transition-all duration-200 ${
-                        focused === "message"
-                          ? "border-[#CCFF00]"
-                          : "border-white/10 hover:border-white/20"
-                      }`}
-                    >
+                    <div className="relative rounded-xl bg-black border border-white/10 hover:border-white/20 focus-within:border-[#CCFF00] transition-all duration-200">
                       <textarea
+                        id="contact-message"
                         name="message"
                         rows={3}
                         value={form.message}
                         onChange={handleChange}
-                        onFocus={() => setFocused("message")}
-                        onBlur={() => setFocused(null)}
                         placeholder="Tell us about your project, goals, or timeline..."
                         className="w-full px-4 py-3.5 bg-transparent text-white font-body text-xs sm:text-sm placeholder:text-zinc-500 outline-none resize-none"
                       />

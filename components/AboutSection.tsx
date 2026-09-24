@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { ArrowRight } from "lucide-react";
 
 export default function AboutSection() {
   return (
@@ -20,13 +19,8 @@ export default function AboutSection() {
             </span>
           </div>
 
-          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-[1.02]">
-            <span
-              className="cyber-glitch-loop text-white"
-              data-text="About Editors Street"
-            >
-              About <span className="text-[#CCFF00]">Editors Street</span>
-            </span>
+          <h2 className="font-heading text-4xl sm:text-6xl lg:text-7xl uppercase tracking-[-0.03em] leading-[1.02] text-white">
+            About <span className="text-[#CCFF00]">Editors Street</span>
           </h2>
         </div>
 

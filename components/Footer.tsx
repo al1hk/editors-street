@@ -35,7 +35,6 @@ export default function Footer() {
   const NAV_LINKS = [
     { name: "Our Work", href: "#our-work" },
     { name: "Services", href: "#services" },
-    { name: "Our Team", href: "#our-team" },
     { name: "About Us", href: "#about-us" },
     { name: "Contact", href: "#contact" },
   ];
@@ -108,6 +107,7 @@ export default function Footer() {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`Follow Editors Street on ${social.name}`}
                         className="font-body text-xs text-zinc-400 hover:text-[#CCFF00] tracking-wider uppercase inline-flex items-center gap-1.5 transition-colors group"
                       >
                         <Icon className="w-3.5 h-3.5 text-zinc-500 group-hover:text-[#CCFF00] transition-colors" />
@@ -126,6 +126,7 @@ export default function Footer() {
             <div className="pt-2">
               <button
                 onClick={scrollToTop}
+                aria-label="Scroll back to top"
                 className="group px-4 py-2.5 rounded-full border border-white/10 hover:border-[#CCFF00] bg-[#0a0a0a] hover:bg-[#CCFF00]/10 transition-all duration-200 inline-flex items-center gap-2 text-xs font-body text-zinc-400 hover:text-white"
               >
                 <span>BACK TO TOP</span>

@@ -4,7 +4,7 @@ import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import OurWorkSection from "@/components/OurWorkSection";
 import ResultsSection from "@/components/ResultsSection";
-import TeamSection from "@/components/TeamSection";
+
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -25,7 +25,7 @@ export default function Home() {
         <ServicesSection />
         <OurWorkSection />
         <ResultsSection />
-        <TeamSection />
+
         <ContactSection />
       </main>
 

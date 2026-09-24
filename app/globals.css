@@ -80,7 +80,6 @@ section {
     animation: none !important;
   }
 }
-
 /* Hide Default Windows Cursor on Desktop so ONLY the Custom Cyber Cursor is visible */
 @media (pointer: fine) {
   *, *::before, *::after, html, body, a, button, input, textarea, select, [role="button"] {

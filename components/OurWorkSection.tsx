@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Play, X, Eye } from "lucide-react";
+import { Play, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface VideoItem {
@@ -43,21 +43,21 @@ const REAL_ESTATE_DATA: VideoItem[] = [
     id: "re-1",
     title: "Real Estate 01",
     image: "/assets/hero/clip2.jpg",
-    video: "/assets/compressed/Aislinn Phelan v.3.mp4",
+    video: "/assets/realestate/Aislinn Phelan v.3.mp4",
     metrics: "",
   },
   {
     id: "re-2",
     title: "Real Estate 02",
     image: "/assets/hero/clip3.jpg",
-    video: "/assets/compressed/Chantal v.1.mp4",
+    video: "/assets/realestate/Chantal v.1.mp4",
     metrics: "",
   },
   {
     id: "re-3",
     title: "Real Estate 03",
     image: "/assets/hero/clip4.jpg",
-    video: "/assets/compressed/Natalie v.2.mp4",
+    video: "/assets/realestate/Natalie v.2.mp4",
     metrics: "",
   },
 ];
@@ -130,11 +130,13 @@ export default function OurWorkSection() {
                       href={item.url || "#"}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={`Watch ${item.title} on YouTube`}
                       className="block relative aspect-video w-full rounded-xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-xl"
                     >
                       <img
                         src={item.image}
                         alt={item.title}
+                        loading="lazy"
                         className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.03]"
                       />
 
@@ -174,27 +176,37 @@ export default function OurWorkSection() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
               {REAL_ESTATE_DATA.map((item, idx) => (
                 <motion.div
                   key={item.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Play showcase video for ${item.title}`}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.45, delay: idx * 0.1 }}
-                  className="group relative cursor-pointer"
+                  className="group relative cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#CCFF00]"
                   onClick={() => {
                     if (item.video) setActiveVideo(item.video);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      if (item.video) setActiveVideo(item.video);
+                    }
                   }}
                 >
                   {/* Vertical 9:16 Video Thumbnail Container */}
                   <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-2xl">
                     <video
                       src={item.video}
+                      poster={item.image}
                       muted
                       playsInline
                       disablePictureInPicture
-                      preload="metadata"
+                      preload="none"
                       className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.04]"
                       onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
                       onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
