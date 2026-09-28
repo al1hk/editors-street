@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { ArrowUp } from "lucide-react";
 
 // Clean custom SVG icons for social platforms
@@ -53,9 +54,13 @@ export default function Footer() {
           {/* Brand Column (6 Cols) */}
           <div className="md:col-span-6 space-y-4">
             <div className="flex items-center">
-              <img
-                src="/assets/image03.gif"
+              <Image
+                src="/assets/logo.webp"
                 alt="Editors Street Logo"
+                width={360}
+                height={216}
+                loading="lazy"
+                unoptimized
                 className="h-12 sm:h-14 w-auto object-contain select-none pointer-events-none"
                 draggable={false}
               />
@@ -65,7 +70,7 @@ export default function Footer() {
               Social Media &amp; Content Agency
             </p>
 
-            <p className="font-body text-xs text-zinc-500 max-w-sm leading-relaxed">
+            <p className="font-body text-xs text-zinc-400 max-w-sm leading-relaxed">
               Helping creators, businesses, and brands produce and scale high-impact content across social media.
             </p>
           </div>
@@ -138,7 +143,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Copyright Bar */}
-        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-[11px] font-body text-zinc-500">
+        <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 text-[11px] font-body text-zinc-400">
           <p>© 2026 Editors Street. All rights reserved.</p>
         </div>
 

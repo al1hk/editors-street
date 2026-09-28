@@ -1,23 +1,65 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
-const VIDEOS = [
-  "/assets/compressed/Natalie v.2.mp4",
-  "/assets/compressed/Red PAddle.mp4",
-  "/assets/compressed/3 Mixed Doubles Mistakes Most Players Make Web (1).mp4",
-  "/assets/compressed/Aislinn Phelan v.3.mp4",
-  "/assets/compressed/Chantal v.1.mp4",
-  "/assets/compressed/video01.mp4",
-  "/assets/compressed/video03.mp4",
+interface HeroMediaItem {
+  id: string;
+  mp4: string;
+  webm: string;
+  poster: string;
+}
+
+const VIDEOS: HeroMediaItem[] = [
+  {
+    id: "vid-1",
+    mp4: "/assets/compressed/Natalie v.2.mp4",
+    webm: "/assets/compressed/Natalie v.2.webm",
+    poster: "/assets/compressed/Natalie v.2.webp",
+  },
+  {
+    id: "vid-2",
+    mp4: "/assets/compressed/Red PAddle.mp4",
+    webm: "/assets/compressed/Red PAddle.webm",
+    poster: "/assets/compressed/Red PAddle.webp",
+  },
+  {
+    id: "vid-3",
+    mp4: "/assets/compressed/3 Mixed Doubles Mistakes Most Players Make Web (1).mp4",
+    webm: "/assets/compressed/3 Mixed Doubles Mistakes Most Players Make Web (1).webm",
+    poster: "/assets/compressed/3 Mixed Doubles Mistakes Most Players Make Web (1).webp",
+  },
+  {
+    id: "vid-4",
+    mp4: "/assets/compressed/Aislinn Phelan v.3.mp4",
+    webm: "/assets/compressed/Aislinn Phelan v.3.webm",
+    poster: "/assets/compressed/Aislinn Phelan v.3.webp",
+  },
+  {
+    id: "vid-5",
+    mp4: "/assets/compressed/Chantal v.1.mp4",
+    webm: "/assets/compressed/Chantal v.1.webm",
+    poster: "/assets/compressed/Chantal v.1.webp",
+  },
+  {
+    id: "vid-6",
+    mp4: "/assets/compressed/video01.mp4",
+    webm: "/assets/compressed/video01.webm",
+    poster: "/assets/compressed/video01.webp",
+  },
+  {
+    id: "vid-7",
+    mp4: "/assets/compressed/video03.mp4",
+    webm: "/assets/compressed/video03.webm",
+    poster: "/assets/compressed/video03.webp",
+  },
 ];
 
-// 7 videos duplicated once = 14 items per row for a perfectly seamless 50% translation loop
-// Total: 28 video elements (down from 112!), saving 75% GPU decoding bandwidth for rock-solid 60 FPS
-const ROW_1 = [...VIDEOS, ...VIDEOS];
-const ROW_2 = [...VIDEOS.slice().reverse(), ...VIDEOS.slice().reverse()];
+// Row 1: primary videos + loop clone posters
+// Row 2: reversed videos (using posters to ensure each video stream loads exactly once)
+const ROW_1_ITEMS = VIDEOS;
+const ROW_2_ITEMS = [...VIDEOS].reverse();
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -97,8 +139,11 @@ export default function HeroSection() {
                   animation: "marquee-left 38s linear infinite",
                 }}
               >
-                {ROW_1.map((src, i) => (
-                  <VideoCard key={`r1-${i}`} src={src} />
+                {ROW_1_ITEMS.map((item, i) => (
+                  <VideoCard key={`r1-vid-${i}`} item={item} isClone={false} />
+                ))}
+                {ROW_1_ITEMS.map((item, i) => (
+                  <VideoCard key={`r1-clone-${i}`} item={item} isClone={true} />
                 ))}
               </div>
             </div>
@@ -112,8 +157,11 @@ export default function HeroSection() {
                   animation: "marquee-right 46s linear infinite",
                 }}
               >
-                {ROW_2.map((src, i) => (
-                  <VideoCard key={`r2-${i}`} src={src} />
+                {ROW_2_ITEMS.map((item, i) => (
+                  <VideoCard key={`r2-vid-${i}`} item={item} isClone={true} />
+                ))}
+                {ROW_2_ITEMS.map((item, i) => (
+                  <VideoCard key={`r2-clone-${i}`} item={item} isClone={true} />
                 ))}
               </div>
             </div>
@@ -170,6 +218,7 @@ export default function HeroSection() {
           >
             <a
               href="#contact"
+              aria-label="Get in touch (contact form)"
               className="group inline-flex items-center justify-center gap-3 px-9 sm:px-11 py-4 sm:py-4.5 rounded-full bg-[#CCFF00] text-black font-mono font-bold text-xs sm:text-sm uppercase tracking-[0.18em] shadow-[0_0_35px_rgba(204,255,0,0.35)] hover:shadow-[0_0_55px_rgba(204,255,0,0.65)] transition-all duration-300 hover:scale-[1.04] active:scale-[0.98]"
             >
               <span>GET IN TOUCH</span>
@@ -178,6 +227,7 @@ export default function HeroSection() {
 
             <a
               href="#our-work"
+              aria-label="Explore our work portfolio"
               className="inline-flex items-center justify-center gap-2 px-7 py-4 sm:py-4.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/10 font-mono text-xs sm:text-sm uppercase tracking-[0.16em] transition-all duration-300 hover:scale-[1.02] backdrop-blur-sm"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#CCFF00]" />
@@ -191,24 +241,60 @@ export default function HeroSection() {
   );
 }
 
-function VideoCard({ src }: { src: string }) {
+function VideoCard({ item, isClone = false }: { item: HeroMediaItem; isClone?: boolean }) {
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isClone) return;
+
+    // Use IntersectionObserver to lazy load video source when card enters or is near viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadVideo(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "150px" }
+    );
+
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, [isClone]);
+
   return (
     <div
+      ref={cardRef}
       className="relative flex-shrink-0 w-[140px] sm:w-[170px] md:w-[190px] aspect-[9/16] rounded-2xl overflow-hidden bg-zinc-950 border border-white/[0.1] shadow-[0_8px_30px_rgba(0,0,0,0.8)]"
       style={{
         contain: "strict",
       }}
     >
-      <video
-        src={src}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        disablePictureInPicture
-        className="w-full h-full object-cover"
-      />
+      {shouldLoadVideo ? (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="none"
+          poster={item.poster}
+          aria-hidden="true"
+          disablePictureInPicture
+          className="w-full h-full object-cover"
+        >
+          <source src={item.webm} type="video/webm" />
+          <source src={item.mp4} type="video/mp4" />
+        </video>
+      ) : (
+        <img
+          src={item.poster}
+          alt=""
+          loading="eager"
+          draggable={false}
+          className="w-full h-full object-cover select-none pointer-events-none"
+        />
+      )}
       {/* Subtle glass rim highlight */}
       <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl pointer-events-none" />
     </div>

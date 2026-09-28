@@ -38,32 +38,48 @@ const LONG_FORM_DATA: VideoItem[] = [
   },
 ];
 
-const REAL_ESTATE_DATA: VideoItem[] = [
+interface RealEstateItem {
+  id: string;
+  title: string;
+  image: string;
+  video: string;
+  webm: string;
+  poster: string;
+  metrics: string;
+}
+
+const REAL_ESTATE_DATA: RealEstateItem[] = [
   {
     id: "re-1",
     title: "Real Estate 01",
-    image: "/assets/hero/clip2.jpg",
+    image: "/assets/realestate/Aislinn Phelan v.3.webp",
     video: "/assets/realestate/Aislinn Phelan v.3.mp4",
+    webm: "/assets/realestate/Aislinn Phelan v.3.webm",
+    poster: "/assets/realestate/Aislinn Phelan v.3.webp",
     metrics: "",
   },
   {
     id: "re-2",
     title: "Real Estate 02",
-    image: "/assets/hero/clip3.jpg",
+    image: "/assets/realestate/Chantal v.1.webp",
     video: "/assets/realestate/Chantal v.1.mp4",
+    webm: "/assets/realestate/Chantal v.1.webm",
+    poster: "/assets/realestate/Chantal v.1.webp",
     metrics: "",
   },
   {
     id: "re-3",
     title: "Real Estate 03",
-    image: "/assets/hero/clip4.jpg",
+    image: "/assets/realestate/Natalie v.2.webp",
     video: "/assets/realestate/Natalie v.2.mp4",
+    webm: "/assets/realestate/Natalie v.2.webm",
+    poster: "/assets/realestate/Natalie v.2.webp",
     metrics: "",
   },
 ];
 
 export default function OurWorkSection() {
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [activeVideo, setActiveVideo] = useState<{ mp4: string; webm: string } | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Lock body scroll and hide navbar when modal is open
@@ -189,26 +205,37 @@ export default function OurWorkSection() {
                   transition={{ duration: 0.45, delay: idx * 0.1 }}
                   className="group relative cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#CCFF00]"
                   onClick={() => {
-                    if (item.video) setActiveVideo(item.video);
+                    if (item.video) setActiveVideo({ mp4: item.video, webm: item.webm });
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      if (item.video) setActiveVideo(item.video);
+                      if (item.video) setActiveVideo({ mp4: item.video, webm: item.webm });
                     }
                   }}
                 >
                   {/* Vertical 9:16 Video Thumbnail Container */}
                   <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-zinc-950 border border-white/10 group-hover:border-[#CCFF00]/60 transition-all duration-300 shadow-2xl">
                     <video
-                      src={item.video}
-                      poster={item.image}
+                      poster={item.poster}
                       muted
                       playsInline
                       disablePictureInPicture
                       preload="none"
+                      aria-hidden="true"
                       className="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.04]"
-                      onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
+                      onMouseEnter={(e) => {
+                        const v = e.currentTarget;
+                        if (!v.src) {
+                          const source = document.createElement('source');
+                          source.src = item.webm; source.type = 'video/webm';
+                          const source2 = document.createElement('source');
+                          source2.src = item.video; source2.type = 'video/mp4';
+                          v.appendChild(source); v.appendChild(source2);
+                          v.load();
+                        }
+                        v.play().catch(() => {});
+                      }}
                       onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
                     />
 
@@ -262,14 +289,17 @@ export default function OurWorkSection() {
             >
               <video
                 ref={videoRef}
-                src={activeVideo}
                 autoPlay
                 controls
                 playsInline
                 disablePictureInPicture
                 controlsList="nodownload noplaybackrate nopictureinpicture"
                 className="w-full h-full object-cover bg-black"
-              />
+              >
+                {activeVideo && <source src={activeVideo.webm} type="video/webm" />}
+                {activeVideo && <source src={activeVideo.mp4} type="video/mp4" />}
+                <track kind="captions" src="/captions/empty.vtt" srcLang="en" label="English" />
+              </video>
             </motion.div>
           </motion.div>
         )}

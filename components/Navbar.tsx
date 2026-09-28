@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { Menu, X, PhoneCall } from "lucide-react";
 
 interface NavItem {
@@ -47,9 +48,13 @@ export default function Navbar() {
             className="flex items-center justify-center select-none bg-[#000000] focus:outline-none"
           >
             <div className="relative bg-[#000000]">
-              <img
-                src="/assets/image03.gif"
+              <Image
+                src="/assets/logo.webp"
                 alt="Editors Street Logo"
+                width={360}
+                height={216}
+                priority
+                unoptimized
                 className="relative h-16 sm:h-20 md:h-24 lg:h-28 w-auto max-w-[80vw] sm:max-w-[540px] object-contain select-none pointer-events-none bg-[#000000]"
                 draggable={false}
               />
@@ -126,6 +131,7 @@ export default function Navbar() {
             <li className="flex items-center pl-3 lg:pl-5 ml-1 border-l border-white/10">
               <a
                 href="#contact"
+                aria-label="Book a call (contact form)"
                 className="luxury-btn-primary group px-4 lg:px-5 py-2 lg:py-2.5 text-[10px] lg:text-[11px] font-body font-bold tracking-[0.14em] uppercase flex items-center gap-1.5"
               >
                 <PhoneCall className="w-3 h-3 fill-black stroke-black shrink-0 transition-transform duration-200 group-hover:rotate-12" />
