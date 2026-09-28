@@ -29,6 +29,14 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Prevent page scrolling behind the open drawer
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <header
       className={`sticky top-0 z-40 w-full transition-colors duration-300 bg-[#000000] ${
@@ -37,7 +45,6 @@ export default function Navbar() {
           : "border-b border-white/[0.06]"
       }`}
     >
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#000000]">
         {/* Logo Section */}
         <div className="relative flex items-center justify-between md:justify-center pt-4 sm:pt-5 pb-2 sm:pb-3 bg-[#000000]">
@@ -67,6 +74,7 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2.5 text-white hover:text-[#CCFF00] focus:outline-none transition-all duration-200 rounded-lg border border-white/10 hover:border-[#CCFF00]/40 hover:bg-[#CCFF00]/5"
               aria-label="Toggle Menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -142,10 +150,11 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer
+          FIX: changed `fixed` -> `absolute` so top-full and 100% are relative
+          to the (sticky) header instead of the viewport. */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-full h-[calc(100dvh-100%)] bg-black/95 backdrop-blur-2xl border-t border-white/10 z-50 flex flex-col justify-between p-6 overflow-y-auto">
-
+        <div className="md:hidden absolute inset-x-0 top-full h-[calc(100dvh-100%)] bg-black/95 backdrop-blur-2xl border-t border-white/10 z-50 flex flex-col justify-between p-6 overflow-y-auto">
           <ul className="space-y-1 mt-2">
             {NAV_ITEMS.map((item) => {
               const isActive = activeItem.toLowerCase() === item.name.toLowerCase();
