@@ -128,7 +128,7 @@ export default function ContactSection() {
                 </div>
                 <div className="min-w-0">
                   <div className="text-[10px] font-body font-bold text-zinc-500 uppercase tracking-wider group-hover:text-[#CCFF00] transition-colors">Email Us</div>
-                  <div className="text-xs font-body text-zinc-200 truncate">editorsstreet@gmail.com</div>
+                  <div className="text-xs font-body text-zinc-200 truncate">hunain.editorsstreet@gmail.com</div>
                 </div>
               </a>
 
